@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "0.12.6" %}
+{% set version = "0.12.7" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 9e2537b85a4a8687911138223597ed81e508b2d0fd022630c7d1118a7cc5a049 
+  sha256: 490ac497f042c5c887403f5a0516b4e810a73412487a78fe58cd59ed7033d83e 
   patches:
     - cxxflags.patch
 
