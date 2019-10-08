@@ -1,4 +1,5 @@
 set -e
+SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv
 mkdir source/build
 cd source/build
 cmake -D TENSORFLOW_ROOT=${PREFIX} \

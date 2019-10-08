@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "0.12.7" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,9 +7,7 @@ package:
 
 source:
   url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 490ac497f042c5c887403f5a0516b4e810a73412487a78fe58cd59ed7033d83e 
-  patches:
-    - cxxflags.patch
+  sha256: 8613199ef885b7d3683cc5a54915768d24dbc2e230bfb80d97c90cbec246d8b5 
 
 build:
   number: 0
@@ -19,23 +17,36 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake >=2.8
+    - cmake >=3.7
     - make  # [unix]
+    - ninja
 
   host:
     - python >=3.6
+    - pip
+    - scikit-build
+    - m2r
+    - tensorflow
     - libtensorflow_cc
+    - setuptools_scm
+    - numpy
+    - scipy
 
   run:
     - python
     - tensorflow
     - libtensorflow_cc
+    - numpy
+    - scipy
 
 test:
+  imports:
+    - deepmd
   commands:
-    - dp_train -h
-    - dp_test -h
-    - dp_frz -h
+    - dp -h
+    - dp train -h
+    - dp freeze -h
+    - dp test -h
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
