@@ -17,18 +17,27 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake >=2.8
+    - cmake >=3.7
     - make  # [unix]
+    - ninja
 
   host:
     - python >=3.6
+    - pip
+    - scikit-build
+    - m2r
     - tensorflow
     - libtensorflow_cc
+    - setuptools_scm
+    - numpy
+    - scipy
 
   run:
     - python
     - tensorflow
     - libtensorflow_cc
+    - numpy
+    - scipy
 
 test:
   imports:
