@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 490ac497f042c5c887403f5a0516b4e810a73412487a78fe58cd59ed7033d83e 
+  sha256: 8613199ef885b7d3683cc5a54915768d24dbc2e230bfb80d97c90cbec246d8b5 
   patches:
     - cxxflags.patch
 
