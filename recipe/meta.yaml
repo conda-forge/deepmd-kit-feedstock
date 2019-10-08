@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: 8613199ef885b7d3683cc5a54915768d24dbc2e230bfb80d97c90cbec246d8b5 
-  patches:
-    - cxxflags.patch
 
 build:
   number: 0
@@ -24,6 +22,7 @@ requirements:
 
   host:
     - python >=3.6
+    - tensorflow
     - libtensorflow_cc
 
   run:
@@ -32,10 +31,13 @@ requirements:
     - libtensorflow_cc
 
 test:
+  imports:
+    - deepmd
   commands:
-    - dp_train -h
-    - dp_test -h
-    - dp_frz -h
+    - dp -h
+    - dp train -h
+    - dp freeze -h
+    - dp test -h
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
