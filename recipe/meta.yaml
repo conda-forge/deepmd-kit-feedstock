@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "0.12.7" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
