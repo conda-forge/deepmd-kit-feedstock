@@ -1,4 +1,5 @@
 set -e
+pip install . --no-deps -vv
 mkdir source/build
 cd source/build
 cmake -D TENSORFLOW_ROOT=${PREFIX} \
