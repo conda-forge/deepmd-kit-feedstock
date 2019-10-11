@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "1.0.0" %}
+{% set version = "1.0.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 8613199ef885b7d3683cc5a54915768d24dbc2e230bfb80d97c90cbec246d8b5 
+  sha256: 95902bb737630e73fc20ea59f4d32fc063b7e00736f23e162a7015922914cec1 
 
 build:
   number: 0
@@ -27,7 +27,7 @@ requirements:
     - scikit-build
     - m2r
     - tensorflow
-    - libtensorflow_cc
+    - libtensorflow_cc  # [linux]
     - setuptools_scm
     - numpy
     - scipy
@@ -35,7 +35,7 @@ requirements:
   run:
     - python
     - tensorflow
-    - libtensorflow_cc
+    - libtensorflow_cc  # [linux]
     - numpy
     - scipy
 
