@@ -1,2 +1,2 @@
 set SETUPTOOLS_SCM_PRETEND_VERSION=%PKG_VERSION%
-pip install . --no-deps -vv
+pip install --install-option="-- -G %CMAKE_GENERATOR%" . --no-deps -vv
