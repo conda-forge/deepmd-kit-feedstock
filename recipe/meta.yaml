@@ -12,7 +12,7 @@ source:
     patches:
       - win.patch  # [win]
       - osx.patch  # [osx]
-  - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz  # [linux]
+  - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 5380c1689a93d7922e3d65d9c186401d429878bb3cbe9a692580d3470d6a253f
     folder: lammps
     patches:
