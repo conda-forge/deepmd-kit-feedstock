@@ -1,19 +1,25 @@
 {% set name = "deepmd-kit" %}
 {% set version = "1.0.1" %}
+{% set lammpsversion = "stable_7Aug2019" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 95902bb737630e73fc20ea59f4d32fc063b7e00736f23e162a7015922914cec1 
-  patches:
-  - win.patch  # [win]
-  - osx.patch  # [osx]
+  - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
+    sha256: 95902bb737630e73fc20ea59f4d32fc063b7e00736f23e162a7015922914cec1 
+    patches:
+      - win.patch  # [win]
+      - osx.patch  # [osx]
+  - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
+    sha256: 5380c1689a93d7922e3d65d9c186401d429878bb3cbe9a692580d3470d6a253f
+    folder: lammps
+    patches:
+      - deepmd.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]	
 
 requirements:
@@ -34,6 +40,10 @@ requirements:
     - setuptools_scm
     - numpy
     - scipy
+    - mpich  # [linux]
+    - zlib  # [linux]
+    - fftw  # [linux]
+    - libpng  # [linux]
 
   run:
     - python
@@ -41,8 +51,16 @@ requirements:
     - libtensorflow_cc  # [linux]
     - numpy
     - scipy
+    - mpich  # [linux]
+    - fftw  # [linux]
 
 test:
+  files:
+    - water_se_a.json
+  source_files:
+    - examples/water/data
+    - examples/water/lmp/water.lmp  # [linux]
+    - examples/water/lmp/in.lammps  # [linux]
   imports:
     - deepmd
   commands:
@@ -50,6 +68,13 @@ test:
     - dp train -h
     - dp freeze -h
     - dp test -h
+    - lmp -help  # [linux]
+    - mv examples/water/data .
+    - mv examples/water/lmp/water.lmp .  # [linux]
+    - mv examples/water/lmp/in.lammps .  # [linux]
+    - dp train water_se_a.json
+    - dp freeze
+    - lmp -in in.lammps  # [linux]
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
