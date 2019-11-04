@@ -40,7 +40,7 @@ requirements:
     - setuptools_scm
     - numpy
     - scipy
-    - {{ mpi }}  # [linux]
+    - mpich  # [linux]
     - zlib  # [linux]
     - fftw  # [linux]
     - libpng  # [linux]
@@ -51,14 +51,14 @@ requirements:
     - libtensorflow_cc  # [linux]
     - numpy
     - scipy
-    - {{ mpi }}  # [linux]
+    - mpich  # [linux]
     - fftw  # [linux]
 
 test:
   files:
-    - input.lammps  # [linux]
-    - water.lmp  # [linux]
-    - frozen_model.pb  # [linux]
+    - input.lammps
+    - water.lmp
+    - frozen_model.pb
   imports:
     - deepmd
   commands:

@@ -1,7 +1,8 @@
+mpi:
+- mpich
+- openmpi
+
 tensorflow:
   - 1.13
 libtensorflow_cc:
   - 1.13
-mpi:
-  - mpich
-  - openmpi
