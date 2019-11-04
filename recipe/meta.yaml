@@ -1,6 +1,6 @@
 {% set name = "deepmd-kit" %}
 {% set version = "1.0.1" %}
-{% set lammps_version = "stable_7Aug2019" %}
+{% set lammpsversion = "stable_7Aug2019" %}
 
 package:
   name: {{ name|lower }}
@@ -13,8 +13,8 @@ source:
     patches:
       - win.patch  # [win]
       - osx.patch  # [osx]
-  - fn: lammps-{{ lammps_version }}
-    url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
+  - fn: lammps-{{ lammpsversion }}
+    url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 5380c1689a93d7922e3d65d9c186401d429878bb3cbe9a692580d3470d6a253f
     folder: lammps
     patches:
@@ -42,7 +42,6 @@ requirements:
     - setuptools_scm
     - numpy
     - scipy
-    # lammps
     - {{ mpi }}  # [linux]
     - zlib  # [linux]
     - fftw  # [linux]
@@ -54,13 +53,11 @@ requirements:
     - libtensorflow_cc  # [linux]
     - numpy
     - scipy
-    # lammps
     - {{ mpi }}  # [linux]
     - fftw  # [linux]
 
 test:
   files:
-    # lammps
     - input.lammps  # [linux]
     - water.lmp  # [linux]
     - frozen_model.pb  # [linux]
@@ -71,7 +68,6 @@ test:
     - dp train -h
     - dp freeze -h
     - dp test -h
-    # lammps
     - lmp -help  # [linux]
     - lmp -in input.lammps  # [linux]
 
