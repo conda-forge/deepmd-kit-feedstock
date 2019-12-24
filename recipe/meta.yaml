@@ -21,6 +21,7 @@ source:
 build:
   number: 0
   skip: true  # [win]	
+  skip: true  # [py<36]
 
 requirements:
   build:
@@ -31,7 +32,7 @@ requirements:
     - ninja
 
   host:
-    - python >=3.6
+    - python
     - pip
     - scikit-build
     - m2r
