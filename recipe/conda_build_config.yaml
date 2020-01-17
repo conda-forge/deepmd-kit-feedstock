@@ -6,3 +6,5 @@ tensorflow:
   - 1.13
 libtensorflow_cc:
   - 1.13
+numpy:
+  - 1.16
