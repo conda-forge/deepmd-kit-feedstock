@@ -39,7 +39,7 @@ requirements:
     - tensorflow
     - libtensorflow_cc  # [linux]
     - setuptools_scm
-    - numpy >=1.16
+    - numpy
     - scipy
     - mpich  # [linux]
     - zlib  # [linux]
