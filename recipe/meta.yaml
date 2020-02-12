@@ -48,8 +48,8 @@ requirements:
 
   run:
     - python
-    - tensorflow
-    - libtensorflow_cc  # [linux]
+    - {{ pin_compatible('tensorflow', max_pin='x.x') }}
+    - {{ pin_compatible('libtensorflow_cc', max_pin='x.x') }}  # [linux]
     - numpy
     - scipy
     - mpich  # [linux]
