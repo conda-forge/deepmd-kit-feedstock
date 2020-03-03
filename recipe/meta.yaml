@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "1.1.3" %}
+{% set version = "1.1.4" %}
 {% set lammpsversion = "stable_7Aug2019" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 06a6658fa920c0280639f2d43abd09f1319cb9b78a9764f1eec42f0358f31452
+    sha256: dd1fb1ed30e7088244c6b9dc31e53229b197166f7eda46a73ee4b367f2ddd635
     patches:
       - win.patch  # [win]
       - osx.patch  # [osx]
@@ -19,8 +19,8 @@ source:
       - deepmd.patch
 
 build:
-  number: 1
-  skip: true  # [win]	
+  number: 0
+  skip: true  # [win]
   skip: true  # [py<36]
 
 requirements:
@@ -82,7 +82,7 @@ about:
   license: LGPL-3.0
   license_family: LGPL
   license_file: LICENSE
-  summary: 'A deep learning package for many-body potential energy representation and molecular dynamics'
+  summary: A deep learning package for many-body potential energy representation and molecular dynamics
   doc_url: https://github.com/deepmodeling/deepmd-kit
   dev_url: https://github.com/deepmodeling/deepmd-kit
 
