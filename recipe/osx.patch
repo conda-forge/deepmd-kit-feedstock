@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index 2f56794..6bbf7b7 100644
+index 34172a6..825043c 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -2,7 +2,7 @@ from skbuild import setup
@@ -8,11 +8,11 @@ index 2f56794..6bbf7b7 100644
  from packaging.version import LegacyVersion
 -from os import path, makedirs
 +from os import path, makedirs, getenv
- import imp,sys
- 
+ import imp
+
  readme_file = path.join(path.dirname(path.abspath(__file__)), 'README.md')
 @@ -56,6 +56,7 @@ setup(
-                 '-DBUILD_PY_IF:BOOL=TRUE', 
+                 '-DBUILD_PY_IF:BOOL=TRUE',
                  '-DBUILD_CPP_IF:BOOL=FALSE',
                  '-DFLOAT_PREC:STRING=high',
 +                "-DCMAKE_OSX_DEPLOYMENT_TARGET={}".format(getenv("MACOSX_DEPLOYMENT_TARGET")),
