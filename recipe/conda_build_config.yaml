@@ -3,6 +3,6 @@ mpi:
 - openmpi
 
 tensorflow:
-  - 1.13
+  - 2.4
 libtensorflow_cc:
-  - 1.13
+  - 2.4
