@@ -43,7 +43,6 @@ requirements:
     - pip
     - scikit-build
     - m2r
-    - abseil-cpp  # [linux] 
     - tensorflow
     - libtensorflow_cc  # [linux]
     - setuptools_scm
