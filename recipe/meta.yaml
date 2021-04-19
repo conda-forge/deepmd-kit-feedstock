@@ -11,6 +11,7 @@ source:
     sha256: dd1fb1ed30e7088244c6b9dc31e53229b197166f7eda46a73ee4b367f2ddd635
     patches:
       - 302.diff
+      - d07af005f8c12c84d215bcb051359c0720c4efd0.diff
       - win.patch  # [win]
       - osx.patch  # [osx]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
