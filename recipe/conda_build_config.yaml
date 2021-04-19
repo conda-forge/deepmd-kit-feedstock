@@ -1,7 +1,10 @@
 mpi:
 - mpich
 - openmpi
-
+c_compiler_version:
+  - 7
+cxx_compiler_version:
+  - 7
 tensorflow:
   - 2.4
 libtensorflow_cc:

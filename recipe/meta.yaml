@@ -10,6 +10,7 @@ source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 8863f3e5cbc2fbb8e5a75c7f38cfcdaf1dae274af77c7a65a92a9f0f1eace689
     patches:
+      - revert_find_protobuf.patch
       - win.patch  # [win]
       - osx.patch  # [osx]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
