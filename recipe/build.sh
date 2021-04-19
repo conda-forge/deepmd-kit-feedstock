@@ -1,5 +1,5 @@
 set -e
-SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv
+SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps --no-build-isolation -vv
 
 if [[ "$target_platform" == linux* ]]; then
 # no libtensorflow_cc on osx
