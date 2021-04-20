@@ -71,7 +71,9 @@ test:
     - examples/water/lmp/water.lmp  # [linux]
     - examples/water/lmp/in.lammps  # [linux]
   imports:
-    - deepmd
+    # dlopen: cannot load any more object with static TLS
+    # maybe a bug of conda-build
+    - deepmd  # [not linux]
   commands:
     - dp -h
     - dp train -h
