@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index 98bcfde..e499d3a 100644
+index 885022d..633f770 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -3,7 +3,7 @@ from skbuild.exceptions import SKBuildError
@@ -8,13 +8,13 @@ index 98bcfde..e499d3a 100644
  from packaging.version import LegacyVersion
 -from os import path, makedirs
 +from os import path, makedirs, getenv
- import os, imp, sys, platform, sysconfig
- 
- def get_dp_install_path() :
-@@ -71,6 +71,7 @@ setup(
+ import os, importlib
+ import pkg_resources
+ from distutils.util import get_platform
+@@ -75,6 +75,7 @@ setup(
+                 '-DBUILD_PY_IF:BOOL=TRUE', 
+                 '-DBUILD_CPP_IF:BOOL=FALSE',
                  '-DFLOAT_PREC:STRING=high',
-                 '-DDP_PIP_INSTALL_PATH=%s' % dp_pip_install_path,
-                 '-DDP_SETUP_INSTALL_PATH=%s' % dp_setup_install_path,
 +                "-DCMAKE_OSX_DEPLOYMENT_TARGET={}".format(getenv("MACOSX_DEPLOYMENT_TARGET")),
      ],
      cmake_source_dir='source',
