@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "1.1.4" %}
+{% set version = "1.2.4" %}
 {% set lammpsversion = "stable_29Oct2020" %}
 
 package:
@@ -8,8 +8,10 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: dd1fb1ed30e7088244c6b9dc31e53229b197166f7eda46a73ee4b367f2ddd635
+    sha256: 8863f3e5cbc2fbb8e5a75c7f38cfcdaf1dae274af77c7a65a92a9f0f1eace689
     patches:
+      - revert_find_protobuf.patch
+      - only_link_what_you_use_on_gnu.patch
       - 302.diff
       - win.patch  # [win]
       - osx.patch  # [osx]
@@ -25,7 +27,7 @@ source:
       - com_google_absl_fix_mac_and_nvcc_build.patch 
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   skip: true  # [py<36]
 
