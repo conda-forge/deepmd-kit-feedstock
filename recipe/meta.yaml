@@ -12,6 +12,7 @@ source:
     patches:
       - revert_find_protobuf.patch
       - only_link_what_you_use_on_gnu.patch
+      - 302.diff
       - win.patch  # [win]
       - osx.patch  # [osx]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
