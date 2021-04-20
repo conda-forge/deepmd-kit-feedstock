@@ -49,6 +49,8 @@ requirements:
     - setuptools_scm
     - numpy >=1.16
     - scipy
+    - dargs
+    - pyyaml
     - mpich  # [linux]
     - zlib  # [linux]
     - fftw  # [linux]
@@ -60,6 +62,8 @@ requirements:
     - {{ pin_compatible('libtensorflow_cc', max_pin='x.x') }}  # [linux]
     - numpy
     - scipy
+    - dargs
+    - pyyaml
     - mpich  # [linux]
 
 test:
