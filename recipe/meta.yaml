@@ -26,7 +26,7 @@ source:
       - com_google_absl_fix_mac_and_nvcc_build.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   skip: true  # [py<36]
 
