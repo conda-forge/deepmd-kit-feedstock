@@ -53,6 +53,7 @@ requirements:
     - zlib  # [linux]
     - fftw  # [linux]
     - libpng  # [linux]
+    - python-hostlist
 
   run:
     - python
@@ -63,6 +64,7 @@ requirements:
     - dargs
     - pyyaml
     - mpich  # [linux]
+    - python-hostlist
 
 test:
   files:
