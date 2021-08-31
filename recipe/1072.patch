@@ -1,0 +1,39 @@
+From bcb61e82615242ee334dfc441a6152c74734259c Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Mon, 30 Aug 2021 23:19:56 -0400
+Subject: [PATCH] Revert "get library extension suffix from built-in method
+ (#1036)"
+
+This reverts commit f35afe065282e18d16eba98ca50c48f9f02fb260.
+---
+ deepmd/env.py | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/deepmd/env.py b/deepmd/env.py
+index 4868eb8c..92287d8a 100644
+--- a/deepmd/env.py
++++ b/deepmd/env.py
+@@ -2,7 +2,7 @@
+ 
+ import logging
+ import os
+-import distutils.ccompiler
++import platform
+ from configparser import ConfigParser
+ from imp import reload
+ from pathlib import Path
+@@ -157,8 +157,12 @@ def get_module(module_name: str) -> "ModuleType":
+     FileNotFoundError
+         if module is not found in directory
+     """
+-    # https://discuss.python.org/t/how-to-get-the-file-extension-of-dynamic-libraries-for-current-os/3916/5
+-    ext = distutils.ccompiler.new_compiler().shared_lib_extension
++    if platform.system() == "Windows":
++        ext = ".dll"
++    elif platform.system() == "Darwin":
++        ext = ".dylib"
++    else:
++        ext = ".so"
+ 
+     module_file = (
+         (Path(__file__).parent / SHARED_LIB_MODULE / module_name)
