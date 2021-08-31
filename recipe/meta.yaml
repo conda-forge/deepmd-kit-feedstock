@@ -89,7 +89,7 @@ test:
     - dp freeze -h  # [not linux]
     - dp test -h  # [not linux]
     - lmp -help  # [linux]
-    - mv examples/water/data .
+    - mv examples/water/data/data_0 ./data
     #- mv examples/water/lmp/water.lmp .  # [linux]
     #- mv examples/water/lmp/in.lammps .  # [linux]
     - dp train water_se_a.json  # [not linux]
