@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.0.0" %}
+{% set version = "2.0.1" %}
 {% set lammpsversion = "stable_29Oct2020" %}
 
 package:
@@ -8,12 +8,9 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: e5071ee928f1be7c073ba18f903b1852446a546fe5f0e1af59af0cbc866219cf
+    sha256: b162b4712ebf8704dd637fc122ef4d574c411d33cf962703b4f26f0128c9de90
     patches:
       - win.patch  # [win]
-      - 1071.patch
-      - 1072.patch
-      - 0002-use-loader_path-on-macos-instead-of-ORIGIN.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 759705e16c1fedd6aa6e07d028cc0c78d73c76b76736668420946a74050c3726
     folder: lammps
