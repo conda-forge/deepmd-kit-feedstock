@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.0.1" %}
+{% set version = "2.0.2" %}
 {% set lammpsversion = "stable_29Oct2020" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: b162b4712ebf8704dd637fc122ef4d574c411d33cf962703b4f26f0128c9de90
+    sha256: 38b57c062771a0823973f890b30e1acdef014a1902eadea8ad6900a10071cc63
     patches:
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
