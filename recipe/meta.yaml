@@ -37,9 +37,9 @@ requirements:
     - scikit-build
     - m2r
     - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_* # [cuda_compiler_version == "None"]
+    - tensorflow {{ tf_version }}.* cpu_*  # [cuda_compiler_version == "None"]
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_* # [linux and cuda_compiler_version == "None"]
+    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - setuptools_scm
     - numpy
     - scipy
@@ -53,14 +53,14 @@ requirements:
   run:
     - python
     - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_* # [cuda_compiler_version == "None"]
+    - tensorflow {{ tf_version }}.* cpu_*  # [cuda_compiler_version == "None"]
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_* # [linux and cuda_compiler_version == "None"]
+    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
-    - {{mpi}}  # [linux]
+    - {{ mpi }}  # [linux]
     - python-hostlist >=1.21
     - h5py
     - wcmatch
