@@ -52,10 +52,10 @@ requirements:
 
   run:
     - python
-    - {{ pin_compatible('tensorflow-cpu', max_pin='x.x') }}  # [cuda_compiler_version == "None"]
-    - {{ pin_compatible('tensorflow-gpu', max_pin='x.x') }}  # [cuda_compiler_version == "None"]
-tf_version
-    - {{ pin_compatible('libtensorflow_cc', max_pin='x.x') }}  # [linux]
+    - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [cuda_compiler_version != "None"]
+    - tensorflow {{ tf_version }}.* cpu_* # [cuda_compiler_version == "None"]
+    - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
+    - libtensorflow_cc {{ tf_version }}.* cpu_* # [linux and cuda_compiler_version == "None"]
     - numpy
     - scipy
     - dargs >=0.2.6
