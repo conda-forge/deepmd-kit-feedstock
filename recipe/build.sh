@@ -18,3 +18,4 @@ cmake -D TENSORFLOW_ROOT=${PREFIX} \
 	  $SRC_DIR/source
 make #-j${CPU_COUNT}
 make install
+fi
