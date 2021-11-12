@@ -64,7 +64,7 @@ requirements:
     - python-hostlist >=1.21
     - h5py
     - wcmatch
-    - lammps  # [linux]
+    - lammps 2021.09.29  # [linux]
 
 test:
   files:
@@ -84,7 +84,6 @@ test:
     - dp train -h  # [not linux]
     - dp freeze -h  # [not linux]
     - dp test -h  # [not linux]
-    - lmp -help  # [linux]
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json  # [not linux]
     - dp freeze  # [not linux]
