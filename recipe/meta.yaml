@@ -64,7 +64,7 @@ requirements:
     - python-hostlist >=1.21
     - h5py
     - wcmatch
-    - lammps 2021.09.29  # [linux]
+    #- lammps 2021.09.29  # [linux]
 
 test:
   files:
