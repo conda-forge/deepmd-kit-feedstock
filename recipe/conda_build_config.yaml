@@ -1,4 +1,7 @@
 mpi:
 - mpich
 - openmpi
-
+c_compiler_version:
+- '7'  # [linux]
+cxx_compiler_version:
+- '7'  # [linux]
