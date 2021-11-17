@@ -20,8 +20,6 @@ docker_image:
 - quay.io/condaforge/linux-anvil-comp7
 mpi:
 - mpich
-numpy:
-- '1.18'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -36,5 +34,3 @@ zip_keys:
 - - cuda_compiler_version
   - cdt_name
   - docker_image
-- - python
-  - numpy
