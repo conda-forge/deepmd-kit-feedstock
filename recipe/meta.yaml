@@ -50,6 +50,7 @@ requirements:
     - python-hostlist >=1.21
     - h5py
     - wcmatch
+    - cub  # [cuda_compiler_version < 11]
 
   run:
     - python
