@@ -51,6 +51,7 @@ requirements:
     - h5py
     - wcmatch
     - cub  # [cuda_compiler_version == '10.2']
+    - packaging
 
   run:
     - python
@@ -68,6 +69,7 @@ requirements:
     - h5py
     - wcmatch
     #- lammps 2021.09.29  # [linux]
+    - packaging
 
 test:
   files:
