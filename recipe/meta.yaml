@@ -42,7 +42,8 @@ requirements:
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - setuptools_scm
-    - numpy
+    - numpy 1.19.*  # [python<310]
+    - numpy 1.21.*  # [python>=310]
     - scipy
     - dargs >=0.2.6
     - pyyaml
