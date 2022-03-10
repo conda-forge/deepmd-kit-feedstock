@@ -1,0 +1,41 @@
+From b9a25acdcc7f6562c082fc20d56be0e5e81c8bc1 Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Thu, 10 Mar 2022 17:10:38 -0500
+Subject: [PATCH 1/2] link from libdeepmd to device libraries should be public
+
+gpu_cuda.h/gpu_rocm.h needs them.
+
+Fixes errors in conda-forge/deepmd-kit-feedstock#31
+---
+ source/lib/CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/source/lib/CMakeLists.txt b/source/lib/CMakeLists.txt
+index 251f8705..150a4de2 100644
+--- a/source/lib/CMakeLists.txt
++++ b/source/lib/CMakeLists.txt
+@@ -11,8 +11,9 @@ if (USE_CUDA_TOOLKIT)
+   add_definitions("-DGOOGLE_CUDA")
+   add_subdirectory(src/cuda)
+   set (EXTRA_LIBS ${EXTRA_LIBS} deepmd_op_cuda)
+-  target_link_libraries (${libname} INTERFACE ${CUDA_LIBRARIES} ${EXTRA_LIBS})
++  target_link_libraries (${libname} INTERFACE ${EXTRA_LIBS})
+   # gpu_cuda.h
++  target_link_libraries (${libname} PUBLIC ${CUDA_LIBRARIES})
+   target_include_directories(${libname} PUBLIC ${CUDA_INCLUDE_DIRS})
+ endif()
+ 
+@@ -20,8 +21,9 @@ if (USE_ROCM_TOOLKIT)
+   add_definitions("-DTENSORFLOW_USE_ROCM")
+   add_subdirectory(src/rocm)
+   set (EXTRA_LIBS ${EXTRA_LIBS} deepmd_op_rocm)
+-  target_link_libraries (${libname} INTERFACE ${ROCM_LIBRARIES} ${EXTRA_LIBS})
++  target_link_libraries (${libname} INTERFACE ${EXTRA_LIBS})
+   # gpu_rocm.h
++  target_link_libraries (${libname} PUBLIC ${ROCM_LIBRARIES})
+   target_include_directories(${libname} PUBLIC ${ROCM_INCLUDE_DIRS})
+ endif()
+ 
+-- 
+2.35.1
+
