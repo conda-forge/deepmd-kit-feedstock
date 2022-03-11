@@ -11,7 +11,6 @@ source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 445dd710bab2d91ce0153800a1cd23728aacdfaee39f951a16015a1ffafcbfdd
     patches:
-      - 0001-link-from-libdeepmd-to-device-libraries-should-be-pu.patch
       - 0002-fix-macos-library-name.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
