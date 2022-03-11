@@ -44,7 +44,7 @@
     "training" : {
 	"systems":	["./data/"],
 	"set_prefix":	"set",    
-	"stop_batch":	1000,
+	"stop_batch":	4,
 	"batch_size":	1,
 
 	"seed":		1,
@@ -52,9 +52,9 @@
 	"_comment": " display and restart",
 	"_comment": " frequencies counted in batch",
 	"disp_file":	"lcurve.out",
-	"disp_freq":	100,
-	"numb_test":	10,
-	"save_freq":	1000,
+	"disp_freq":	1,
+	"numb_test":	1,
+	"save_freq":	2,
 	"save_ckpt":	"model.ckpt",
 	"disp_training":true,
 	"time_training":true,
