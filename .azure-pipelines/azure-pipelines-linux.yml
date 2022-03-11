@@ -8,126 +8,126 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpimpichpython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10mpiopenmpipython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpimpichpython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10mpiopenmpipython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpimpichpython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.7.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.8.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10mpiopenmpipython3.9.____cpython
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.7.____cpython
+      linux_64_cuda_compiler_version10.2mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpimpichpython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.8.____cpython
+      linux_64_cuda_compiler_version10.2mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpimpichpython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpimpichpython3.9.____cpython
+      linux_64_cuda_compiler_version10.2mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpimpichpython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.7.____cpython
+      linux_64_cuda_compiler_version10.2mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpiopenmpipython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.8.____cpython
+      linux_64_cuda_compiler_version10.2mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpiopenmpipython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7mpiopenmpipython3.9.____cpython
+      linux_64_cuda_compiler_version10.2mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version10.2mpiopenmpipython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.7.____cpython
+      linux_64_cuda_compiler_version11.0mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpimpichpython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.8.____cpython
+      linux_64_cuda_compiler_version11.0mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpimpichpython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpimpichpython3.9.____cpython
+      linux_64_cuda_compiler_version11.0mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpimpichpython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.7.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.7.____cpython
+      linux_64_cuda_compiler_version11.0mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpiopenmpipython3.7.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.8.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.8.____cpython
+      linux_64_cuda_compiler_version11.0mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpiopenmpipython3.8.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-      linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.9.____cpython:
-        CONFIG: linux_64_c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9mpiopenmpipython3.9.____cpython
+      linux_64_cuda_compiler_version11.0mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.0mpiopenmpipython3.9.____cpython
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
+      linux_64_cuda_compiler_version11.1mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpimpichpython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.1mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpimpichpython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.1mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpimpichpython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.1mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpiopenmpipython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.1mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpiopenmpipython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.1mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.1mpiopenmpipython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
+      linux_64_cuda_compiler_version11.2mpimpichpython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpimpichpython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_version11.2mpimpichpython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpimpichpython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_version11.2mpimpichpython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpimpichpython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_version11.2mpiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpiopenmpipython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_version11.2mpiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpiopenmpipython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_version11.2mpiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_version11.2mpiopenmpipython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
+      linux_64_cuda_compiler_versionNonempimpichpython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempimpichpython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cuda_compiler_versionNonempimpichpython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempimpichpython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cuda_compiler_versionNonempimpichpython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempimpichpython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cuda_compiler_versionNonempiopenmpipython3.7.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempiopenmpipython3.7.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cuda_compiler_versionNonempiopenmpipython3.8.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempiopenmpipython3.8.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
+      linux_64_cuda_compiler_versionNonempiopenmpipython3.9.____cpython:
+        CONFIG: linux_64_cuda_compiler_versionNonempiopenmpipython3.9.____cpython
+        UPLOAD_PACKAGES: 'True'
+        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
   timeoutInMinutes: 360
 
   steps:
