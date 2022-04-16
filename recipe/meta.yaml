@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.1.0" %}
+{% set version = "2.1.1" %}
 {% set lammpsversion = "stable_29Sep2021" %}
 {% set tf_version = "2.7" %}
 
@@ -9,7 +9,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 445dd710bab2d91ce0153800a1cd23728aacdfaee39f951a16015a1ffafcbfdd
+    sha256: 86cfd098ad26a6c236ec695d02999b5f5574b0e8c404eb0068470991349adfc6
     patches:
       - 0002-fix-macos-library-name.patch
       - win.patch  # [win]
@@ -18,7 +18,7 @@ source:
     folder: lammps
 
 build:
-  number: 2
+  number: 0
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
