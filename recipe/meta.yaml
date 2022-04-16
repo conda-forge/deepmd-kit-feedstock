@@ -18,7 +18,7 @@ source:
     folder: lammps
 
 build:
-  number: 1
+  number: 2
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -43,7 +43,7 @@ requirements:
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - setuptools_scm
-    - numpy 1.19.*
+    - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
@@ -61,7 +61,7 @@ requirements:
     - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - numpy 1.19.*
+    - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
