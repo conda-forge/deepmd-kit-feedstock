@@ -7,9 +7,11 @@ c_compiler_version:
   - '7' # [linux64]
   - '7' # [linux64]
   - '7' # [linux64]
+  - '11' # [osx]
 cxx_compiler_version:
   - '7' # [linux64]
   - '7' # [linux64]
   - '7' # [linux64]
   - '7' # [linux64]
   - '7' # [linux64]
+  - '11' # [osx]
