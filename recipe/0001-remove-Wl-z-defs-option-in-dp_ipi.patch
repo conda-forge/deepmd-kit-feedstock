@@ -1,0 +1,35 @@
+From 418e23be61d10ea5c9a1b716bcded4a39d281bc1 Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Sun, 22 May 2022 17:07:38 -0400
+Subject: [PATCH] remove "-Wl,-z,defs" option in dp_ipi
+
+This option throws an error when linking libcudart with GCC 9:
+dp_ipi: hidden symbol `cudaGetDeviceCount' in /usr/local/cuda/lib64/libcudart_static.a(libcudart_static.a.o) is referenced by DSO
+final link failed: bad value
+---
+ source/ipi/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/source/ipi/CMakeLists.txt b/source/ipi/CMakeLists.txt
+index d71a904..b4cc244 100644
+--- a/source/ipi/CMakeLists.txt
++++ b/source/ipi/CMakeLists.txt
+@@ -19,7 +19,7 @@ target_include_directories(${ipiname} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../3rd
+ set_target_properties(
+   ${ipiname}
+   PROPERTIES
+-  LINK_FLAGS "-Wl,-rpath,'$ORIGIN'/../lib -Wl,-z,defs"
++  LINK_FLAGS "-Wl,-rpath,'$ORIGIN'/../lib"
+   INSTALL_RPATH "$ORIGIN/../lib:${TensorFlow_LIBRARY_PATH}"
+   COMPILE_DEFINITIONS ${prec_def}
+ )
+@@ -34,4 +34,4 @@ install(
+ )
+ endfunction()
+ _add_ipi_variant("${HIGH_PREC_VARIANT}" "${HIGH_PREC_DEF}")
+-_add_ipi_variant("${LOW_PREC_VARIANT}" "${LOW_PREC_DEF}")
+\ No newline at end of file
++_add_ipi_variant("${LOW_PREC_VARIANT}" "${LOW_PREC_DEF}")
+-- 
+2.34.1
+

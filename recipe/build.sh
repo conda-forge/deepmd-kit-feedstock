@@ -1,4 +1,6 @@
 set -e
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH:+${CPLUS_INCLUDE_PATH}:}${PREFIX}/include"
+
 if [[ ${cuda_compiler_version} != "None" ]]; then
     DEEPMD_USE_CUDA_TOOLKIT=TRUE
     DP_VARIANT=cuda
