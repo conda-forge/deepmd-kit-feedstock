@@ -11,7 +11,7 @@ source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 86cfd098ad26a6c236ec695d02999b5f5574b0e8c404eb0068470991349adfc6
     patches:
-      - 0001-remove-Wl-z-defs-option-in-dp_ipi.patch
+      - 0001-disable-remapper.patch  # [osx]
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 2dff656cb21fd9a6d46c818741c99d400cfb1b12102604844663b655fb2f893d
