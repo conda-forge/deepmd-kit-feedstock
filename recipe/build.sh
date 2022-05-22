@@ -1,4 +1,6 @@
 set -e
+export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH:+${CPLUS_INCLUDE_PATH}:}${PREFIX}/include"
+
 if [[ ${cuda_compiler_version} != "None" ]]; then
     DEEPMD_USE_CUDA_TOOLKIT=TRUE
     DP_VARIANT=cuda
@@ -6,7 +8,7 @@ else
     DEEPMD_USE_CUDA_TOOLKIT=FALSE
     DP_VARIANT=cpu
 fi
-DP_VARIANT=${DP_VARIANT} SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv
+DP_VARIANT=${DP_VARIANT} SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv --no-use-pep517
 
 if [[ "$target_platform" == linux* ]]; then
 # no libtensorflow_cc on osx

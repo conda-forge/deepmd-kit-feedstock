@@ -1,0 +1,25 @@
+From 51ee9ee09d655bc75dd721ac4f2b9e16e784e6eb Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Sun, 22 May 2022 18:18:56 -0400
+Subject: [PATCH] disable remapper
+
+---
+ source/op/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/op/CMakeLists.txt b/source/op/CMakeLists.txt
+index e43c66d..d71332b 100644
+--- a/source/op/CMakeLists.txt
++++ b/source/op/CMakeLists.txt
+@@ -18,7 +18,7 @@ if (BUILD_CPP_IF)
+ endif (BUILD_CPP_IF)
+ 
+ if (BUILD_PY_IF)
+-  add_library(op_abi MODULE ${OP_SRC} ${OP_LIB} ${OP_REMAPPER_SRC})
++  add_library(op_abi MODULE ${OP_SRC} ${OP_LIB})
+   add_library(op_grads MODULE ${OP_GRADS_SRC})
+   
+   message(STATUS ${TensorFlowFramework_LIBRARY})
+-- 
+2.34.1
+
