@@ -1,0 +1,25 @@
+From 8d246376870b8bf24fc485504c5c03ded03c4c9e Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Wed, 25 May 2022 03:19:56 -0400
+Subject: [PATCH 2/2] avoid static CUDA linking
+
+Fix #1724.
+---
+ source/lib/src/cuda/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/source/lib/src/cuda/CMakeLists.txt b/source/lib/src/cuda/CMakeLists.txt
+index 2cf2d59..1fb6934 100644
+--- a/source/lib/src/cuda/CMakeLists.txt
++++ b/source/lib/src/cuda/CMakeLists.txt
+@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.7)
+ project(deepmd_op_cuda)
+ 
+ # SET(CUDA_SEPARABLE_COMPILATION ON)
++set(CUDA_USE_STATIC_CUDA_RUNTIME OFF CACHE INTERNAL "")
+ find_package(CUDA REQUIRED)
+ if (NOT CUDA_FOUND)
+     message(STATUS "CUDA not found. Project will not be built.")
+-- 
+2.34.1
+
