@@ -12,13 +12,14 @@ source:
     sha256: 86cfd098ad26a6c236ec695d02999b5f5574b0e8c404eb0068470991349adfc6
     patches:
       - 0001-disable-remapper.patch  # [osx]
+      - 0002-avoid-static-CUDA-linking.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 2dff656cb21fd9a6d46c818741c99d400cfb1b12102604844663b655fb2f893d
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
