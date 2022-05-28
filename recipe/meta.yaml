@@ -1,7 +1,7 @@
 {% set name = "deepmd-kit" %}
 {% set version = "2.1.1" %}
 {% set lammpsversion = "stable_29Sep2021" %}
-{% set tf_version = "2.7" %}
+{% set tf_version = "2.8" %}
 
 package:
   name: {{ name|lower }}
@@ -19,7 +19,7 @@ source:
     folder: lammps
 
 build:
-  number: 1
+  number: 2
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -44,7 +44,8 @@ requirements:
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - setuptools_scm
-    - numpy
+    - numpy 1.20.*  # [py<310]
+    - numpy 1.21.*  # [py>=310]
     - scipy
     - dargs >=0.2.6
     - pyyaml
@@ -62,7 +63,8 @@ requirements:
     - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - numpy
+    - numpy 1.20.*  # [py<310]
+    - numpy 1.21.*  # [py>=310]
     - scipy
     - dargs >=0.2.6
     - pyyaml
@@ -70,8 +72,10 @@ requirements:
     - python-hostlist >=1.21
     - h5py
     - wcmatch
-    #- lammps 2021.09.29  # [linux]
     - packaging
+
+  run_constrained:
+    - lammps 2021.09.29  # [linux]
 
 test:
   files:
@@ -79,21 +83,15 @@ test:
   source_files:
     - examples/water/data
   imports:
-    # dlopen: cannot load any more object with static TLS
-    # because tensorflow link too many libraries
-    # but it can successfully run on my machine
-    - deepmd  # [not linux]
-  #requires:
-  #  - pip
+    - deepmd
+  requires:
+    - pip
   commands:
-    #- pip check
-    - dp -h  # [not linux]
-    - dp train -h  # [not linux]
-    - dp freeze -h  # [not linux]
-    - dp test -h  # [not linux]
-    - mv examples/water/data/data_0 ./data
-    - dp train water_se_a.json  # [not linux]
-    - dp freeze  # [not linux]
+    - pip check
+    - dp -h
+    - dp train -h
+    - dp freeze -h
+    - dp test -h
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
