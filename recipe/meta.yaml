@@ -12,7 +12,6 @@ source:
     sha256: 42261e5d6ad8faf5774998d28e2ac2e20f0428c6d48c36bffdc0210ff26f5d97
     patches:
       - 0001-disable-remapper.patch  # [osx]
-      - 0002-avoid-static-CUDA-linking.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
     sha256: 2dff656cb21fd9a6d46c818741c99d400cfb1b12102604844663b655fb2f893d
