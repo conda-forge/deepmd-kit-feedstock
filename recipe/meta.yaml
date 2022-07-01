@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.1.2" %}
+{% set version = "2.1.3" %}
 {% set lammpsversion = "stable_29Sep2021" %}
 {% set tf_version = "2.8" %}
 
@@ -9,7 +9,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 42261e5d6ad8faf5774998d28e2ac2e20f0428c6d48c36bffdc0210ff26f5d97
+    sha256: 46b0ebdea86bb78b678d9058b7cab32daad1d4800c0d36c23127919193cb1bb9
     patches:
       - 0001-disable-remapper.patch  # [osx]
       - win.patch  # [win]
