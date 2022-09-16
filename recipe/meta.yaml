@@ -1,7 +1,9 @@
 {% set name = "deepmd-kit" %}
 {% set version = "2.1.4" %}
-{% set lammpsversion = "stable_29Sep2021" %}
-{% set tf_version = "2.8" %}
+{% set lammps_version = "stable_23Jun2022_update1" %}
+{% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
+{% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
+{% set tf_version = "2.9" %}
 
 package:
   name: {{ name|lower }}
@@ -13,12 +15,12 @@ source:
     patches:
       - 0001-disable-remapper.patch  # [osx]
       - win.patch  # [win]
-  - url: https://github.com/lammps/lammps/archive/{{ lammpsversion }}.tar.gz
-    sha256: 2dff656cb21fd9a6d46c818741c99d400cfb1b12102604844663b655fb2f893d
+  - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
+    sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -74,7 +76,7 @@ requirements:
     - packaging
 
   run_constrained:
-    - lammps 2021.09.29  # [linux]
+    - lammps {{ lammps_conda_version }}  # [linux]
 
 test:
   files:
