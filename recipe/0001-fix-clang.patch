@@ -41,6 +41,7 @@ index 8e7e82a..809eb38 100644
 -template class AtomMap<double>;
 +template class deepmd::AtomMap<float>;
 +template class deepmd::AtomMap<double>;
+
 diff --git a/source/cmake/Findtensorflow.cmake b/source/cmake/Findtensorflow.cmake
 index 97d21b84..0ec28fcc 100644
 --- a/source/cmake/Findtensorflow.cmake
