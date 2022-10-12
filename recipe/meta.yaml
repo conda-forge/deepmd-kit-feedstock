@@ -3,7 +3,6 @@
 {% set lammps_version = "stable_23Jun2022_update1" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
-{% set tf_version = "2.10" %}
 
 package:
   name: {{ name|lower }}
@@ -34,33 +33,24 @@ requirements:
     - cmake >=3.7
     - make  # [unix]
     - ninja
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
 
   host:
     - python
     - pip
     - scikit-build
     - m2r
-    - tensorflow {{ tf_version }}.*
-    - libtensorflow_cc {{ tf_version }}.*
+    - tensorflow
+    - libtensorflow_cc
     - setuptools_scm
-    - numpy
-    - scipy
-    - dargs >=0.2.6
-    - pyyaml
     - {{ mpi }}  # [linux]
-    - python-hostlist >=1.21
-    - h5py
-    - wcmatch
     - cub  # [cuda_compiler_version == '10.2']
-    - packaging
 
   run:
     - python
-    - tensorflow {{ tf_version }}.*  # [not linux]
-    - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
+    - tensorflow
+    - libtensorflow_cc
     - numpy
     - scipy
     - dargs >=0.2.6

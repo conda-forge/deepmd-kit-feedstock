@@ -1,25 +1,15 @@
-From 51ee9ee09d655bc75dd721ac4f2b9e16e784e6eb Mon Sep 17 00:00:00 2001
-From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
-Date: Sun, 22 May 2022 18:18:56 -0400
-Subject: [PATCH] disable remapper
-
----
- source/op/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
 diff --git a/source/op/CMakeLists.txt b/source/op/CMakeLists.txt
-index e43c66d..d71332b 100644
+index ddcd833..da57dae 100644
 --- a/source/op/CMakeLists.txt
 +++ b/source/op/CMakeLists.txt
-@@ -18,7 +18,7 @@ if (BUILD_CPP_IF)
- endif (BUILD_CPP_IF)
- 
- if (BUILD_PY_IF)
--  add_library(op_abi MODULE ${OP_SRC} ${OP_LIB} ${OP_REMAPPER_SRC})
-+  add_library(op_abi MODULE ${OP_SRC} ${OP_LIB})
-   add_library(op_grads MODULE ${OP_GRADS_SRC})
-   
-   message(STATUS ${TensorFlowFramework_LIBRARY})
--- 
-2.34.1
-
+@@ -30,6 +30,10 @@ if (BUILD_PY_IF)
+   target_link_libraries(
+     op_grads PRIVATE ${TensorFlowFramework_LIBRARY}
+     )
++  find_package(Protobuf)
++  if(Protobuf_LIBRARIES)
++    target_link_libraries(op_abi PRIVATE ${Protobuf_LIBRARIES})
++  endif()
+   target_include_directories(op_abi PUBLIC ${TensorFlow_INCLUDE_DIRS})
+   target_include_directories(op_grads PUBLIC ${TensorFlow_INCLUDE_DIRS})
+   if (APPLE)
