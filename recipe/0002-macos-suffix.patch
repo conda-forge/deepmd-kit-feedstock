@@ -1,0 +1,16 @@
+diff --git a/source/cmake/Findtensorflow.cmake b/source/cmake/Findtensorflow.cmake
+index 32e120a19..462236f82 100644
+--- a/source/cmake/Findtensorflow.cmake
++++ b/source/cmake/Findtensorflow.cmake
+@@ -121,8 +121,8 @@ endif ()
+ if (WIN32)
+   list(APPEND TensorFlow_search_PATHS ${TENSORFLOW_ROOT}/python)
+ else ()
+-list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES .so.1)
+-list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES .so.2)
++  list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX}.1)
++  list(APPEND CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_SHARED_LIBRARY_SUFFIX}.2)
+ endif()
+ set (TensorFlowFramework_LIBRARY_PATH "")
+ foreach (module ${TensorFlowFramework_FIND_COMPONENTS})
+
