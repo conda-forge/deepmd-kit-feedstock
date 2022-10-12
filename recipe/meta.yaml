@@ -11,7 +11,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 9289aca4a8f9d1a6ac20d1055da5b18a26a1ab3e64b6352dca0bed59bbb719bd
+    sha256: a9a657c4f16abda935343d4440c00a0b7da80accbae067bdf98e26973936290c
     patches:
       #- 0001-disable-remapper.patch  # [osx]
       - win.patch  # [win]
