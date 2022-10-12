@@ -1,9 +1,9 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.1.4" %}
+{% set version = "2.1.5" %}
 {% set lammps_version = "stable_23Jun2022_update1" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
-{% set tf_version = "2.9" %}
+{% set tf_version = "2.10" %}
 
 package:
   name: {{ name|lower }}
@@ -13,14 +13,14 @@ source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 9289aca4a8f9d1a6ac20d1055da5b18a26a1ab3e64b6352dca0bed59bbb719bd
     patches:
-      - 0001-disable-remapper.patch  # [osx]
+      #- 0001-disable-remapper.patch  # [osx]
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
     folder: lammps
 
 build:
-  number: 1
+  number: 0
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -39,14 +39,10 @@ requirements:
     - pip
     - scikit-build
     - m2r
-    - tensorflow {{ tf_version }}.*  # [not linux]
-    - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
+    - tensorflow {{ tf_version }}.*
+    - libtensorflow_cc {{ tf_version }}.*
     - setuptools_scm
-    - numpy 1.20.*  # [py<310]
-    - numpy 1.21.*  # [py>=310]
+    - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
@@ -64,8 +60,7 @@ requirements:
     - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
     - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
     - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - numpy 1.20.*  # [py<310]
-    - numpy 1.21.*  # [py>=310]
+    - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
