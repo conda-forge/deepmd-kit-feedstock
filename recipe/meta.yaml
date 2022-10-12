@@ -13,7 +13,7 @@ source:
     sha256: a9a657c4f16abda935343d4440c00a0b7da80accbae067bdf98e26973936290c
     patches:
       - 0001-fix-clang.patch
-      - 0002-macos-suffix.patch
+      - 0002-read-cmake-args.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2

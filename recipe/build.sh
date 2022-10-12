@@ -17,6 +17,7 @@ cmake -D TENSORFLOW_ROOT=${PREFIX} \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
+	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make -j${CPU_COUNT}
 make install
