@@ -71,15 +71,15 @@ requirements:
 test:
   files:
     - water_se_a.json
-    - water.lmp
-    - in.lammps
+    #- water.lmp
+    #- in.lammps
   source_files:
     - examples/water/data
   imports:
     - deepmd
   requires:
     - pip
-    - lammps
+    #- lammps
   commands:
     - pip check
     - dp -h
@@ -89,7 +89,7 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb 
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
+    #- mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
