@@ -9,7 +9,7 @@
 	    "rcut":		6.00,
 	    "neuron":		[2, 4, 8],
 	    "resnet_dt":	false,
-	    "axis_neuron":	16,
+	    "axis_neuron":	4,
 	    "seed":		1,
 	    "_comment":		" that's all"
 	},
