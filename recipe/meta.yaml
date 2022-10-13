@@ -89,7 +89,7 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb 
-    - lmp_mpi -in in.lammps
+    - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
