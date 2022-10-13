@@ -7,7 +7,9 @@ else
     DEEPMD_USE_CUDA_TOOLKIT=FALSE
     DP_VARIANT=cpu
 fi
-DP_VARIANT=${DP_VARIANT} SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv --no-use-pep517
+DP_VARIANT=${DP_VARIANT} \
+	CMAKE_OSX_ARCHITECTURES=${target_platform} \
+	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION pip install . --no-deps -vv --no-use-pep517
 
 
 mkdir $SRC_DIR/source/build
