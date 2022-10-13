@@ -15,6 +15,7 @@ source:
       - 0001-fix-clang.patch
       - 0002-read-cmake-args.patch
       - 0003-fix-lmp.patch
+      - 0004-loader-path.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
