@@ -46,7 +46,7 @@ requirements:
     - tensorflow
     - libtensorflow_cc
     - setuptools_scm
-    - {{ mpi }}  # [linux]
+    - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
 
   run:
@@ -57,7 +57,7 @@ requirements:
     - scipy
     - dargs >=0.2.6
     - pyyaml
-    - {{ mpi }}  # [linux]
+    - {{ mpi }}
     - python-hostlist >=1.21
     - h5py
     - wcmatch
