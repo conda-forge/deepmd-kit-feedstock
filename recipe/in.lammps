@@ -11,6 +11,8 @@ read_data	water.lmp
 mass 		1 16
 mass		2 2
 
+plugin load libdeepmd_lmp.so
+
 pair_style	deepmd frozen_model.pb
 pair_coeff  * *	
 
