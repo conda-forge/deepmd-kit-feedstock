@@ -86,6 +86,7 @@ test:
     - dp train -h
     - dp freeze -h
     - dp test -h
+    - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb 
     - lmp_mpi -in in.lammps
