@@ -25,5 +25,5 @@ cmake -D TENSORFLOW_ROOT=${PREFIX} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
-make -j${CPU_COUNT}
+make #-j${CPU_COUNT}
 make install
