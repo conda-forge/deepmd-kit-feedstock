@@ -1,3 +1,14 @@
 mpi:
   - mpich
   - openmpi
+tensorflow:
+- '2.10'
+libtensorflow_cc:
+- '2.10' 
+pin_run_as_build:
+  tensorflow:
+    min_pin: x.x
+    max_pin: x.x
+  libtensorflow_cc:
+    min_pin: x.x
+    max_pin: x.x

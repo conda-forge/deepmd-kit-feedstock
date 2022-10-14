@@ -1,9 +1,8 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.1.4" %}
+{% set version = "2.1.5" %}
 {% set lammps_version = "stable_23Jun2022_update1" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
-{% set tf_version = "2.9" %}
 
 package:
   name: {{ name|lower }}
@@ -11,19 +10,24 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 9289aca4a8f9d1a6ac20d1055da5b18a26a1ab3e64b6352dca0bed59bbb719bd
+    sha256: a9a657c4f16abda935343d4440c00a0b7da80accbae067bdf98e26973936290c
     patches:
-      - 0001-disable-remapper.patch  # [osx]
+      - 0001-fix-clang.patch
+      - 0002-read-cmake-args.patch
+      - 0003-fix-lmp.patch
+      - 0004-loader-path.patch
+      - 0005-remove-py-abi.patch
       - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
     folder: lammps
 
 build:
-  number: 1
+  number: 0
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
+  skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
 
 requirements:
   build:
@@ -33,43 +37,29 @@ requirements:
     - cmake >=3.7
     - make  # [unix]
     - ninja
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
 
   host:
     - python
     - pip
     - scikit-build
     - m2r
-    - tensorflow {{ tf_version }}.*  # [not linux]
-    - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
+    - tensorflow
+    - libtensorflow_cc
     - setuptools_scm
-    - numpy 1.20.*  # [py<310]
-    - numpy 1.21.*  # [py>=310]
-    - scipy
-    - dargs >=0.2.6
-    - pyyaml
-    - {{ mpi }}  # [linux]
-    - python-hostlist >=1.21
-    - h5py
-    - wcmatch
+    - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
-    - packaging
 
   run:
     - python
-    - tensorflow {{ tf_version }}.*  # [not linux]
-    - tensorflow {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - tensorflow {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - libtensorflow_cc {{ tf_version }}.* cuda{{ cuda_compiler_version | replace('.', '') }}*  # [linux and cuda_compiler_version != "None"]
-    - libtensorflow_cc {{ tf_version }}.* cpu_*  # [linux and cuda_compiler_version == "None"]
-    - numpy 1.20.*  # [py<310]
-    - numpy 1.21.*  # [py>=310]
+    - tensorflow
+    - libtensorflow_cc
+    - numpy
     - scipy
     - dargs >=0.2.6
     - pyyaml
-    - {{ mpi }}  # [linux]
+    - {{ mpi }}
     - python-hostlist >=1.21
     - h5py
     - wcmatch
@@ -81,18 +71,25 @@ requirements:
 test:
   files:
     - water_se_a.json
+    #- water.lmp
+    #- in.lammps
   source_files:
     - examples/water/data
   imports:
     - deepmd
   requires:
     - pip
+    #- lammps
   commands:
     - pip check
     - dp -h
     - dp train -h
     - dp freeze -h
     - dp test -h
+    - mv examples/water/data/data_0 ./data
+    - dp train water_se_a.json
+    - dp freeze -o frozen_model.pb 
+    #- mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit

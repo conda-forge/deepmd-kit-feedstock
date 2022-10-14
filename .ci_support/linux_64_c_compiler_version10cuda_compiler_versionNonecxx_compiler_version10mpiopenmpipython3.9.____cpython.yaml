@@ -18,6 +18,8 @@ cxx_compiler_version:
 - '10'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
+libtensorflow_cc:
+- '2.10'
 mpi:
 - openmpi
 mpich:
@@ -25,13 +27,21 @@ mpich:
 openmpi:
 - '4'
 pin_run_as_build:
+  libtensorflow_cc:
+    min_pin: x.x
+    max_pin: x.x
   python:
+    min_pin: x.x
+    max_pin: x.x
+  tensorflow:
     min_pin: x.x
     max_pin: x.x
 python:
 - 3.9.* *_cpython
 target_platform:
 - linux-64
+tensorflow:
+- '2.10'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version

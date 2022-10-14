@@ -7,14 +7,14 @@
 	    "sel":		[46, 92],
 	    "rcut_smth":	5.80,
 	    "rcut":		6.00,
-	    "neuron":		[25, 50, 100],
+	    "neuron":		[2, 4, 8],
 	    "resnet_dt":	false,
-	    "axis_neuron":	16,
+	    "axis_neuron":	4,
 	    "seed":		1,
 	    "_comment":		" that's all"
 	},
 	"fitting_net" : {
-	    "neuron":		[240, 240, 240],
+	    "neuron":		[16, 16, 16],
 	    "resnet_dt":	true,
 	    "seed":		1,
 	    "_comment":		" that's all"
