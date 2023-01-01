@@ -1,0 +1,14 @@
+diff --git a/source/api_cc/src/common.cc b/source/api_cc/src/common.cc
+index 01c2dd5f..f9b7ceb6 100644
+--- a/source/api_cc/src/common.cc
++++ b/source/api_cc/src/common.cc
+@@ -255,8 +255,7 @@ void
+ deepmd::
+ load_op_library()
+ {
+-  tensorflow::Env* env = tensorflow::Env::Default();
+-  std::string dso_path = env->FormatLibraryFileName("deepmd_op", "");
++  std::string dso_path = "libdeepmd_op.so";
+   void* dso_handle = dlopen(dso_path.c_str(), RTLD_NOW | RTLD_LOCAL);
+   if (!dso_handle) {
+     throw deepmd::deepmd_exception(dso_path + " is not found! You can add the library directory to LD_LIBRARY_PATH");
