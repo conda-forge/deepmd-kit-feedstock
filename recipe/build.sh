@@ -13,7 +13,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DTENSORFLOW_ROOT:STRING=${PREFIX}"
 fi
 DP_VARIANT=${DP_VARIANT} \
-	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . --no-deps -vv --no-use-pep517
+	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
 
 mkdir $SRC_DIR/source/build
