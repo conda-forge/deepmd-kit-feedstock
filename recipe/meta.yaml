@@ -11,14 +11,6 @@ package:
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 377fcaba413259c0f0372aa47a42ff317f2b8865652229a92725b80c40a486b8
-    patches:
-      - 0001-fix-clang.patch
-      - 0002-read-cmake-args.patch
-      - 0003-fix-lmp.patch
-      - 0004-loader-path.patch
-      - 0005-remove-py-abi.patch
-      - 0006-fix-macos-op.patch
-      - win.patch  # [win]
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
     folder: lammps
