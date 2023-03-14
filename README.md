@@ -1,11 +1,11 @@
-About deepmd-kit
-================
+About deepmd-kit-feedstock
+==========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/deepmd-kit-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/deepmodeling/deepmd-kit
 
 Package license: LGPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/deepmd-kit-feedstock/blob/main/LICENSE.txt)
 
 Summary: A deep learning package for many-body potential energy representation and molecular dynamics
 
