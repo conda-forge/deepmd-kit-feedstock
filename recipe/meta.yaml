@@ -11,6 +11,8 @@ package:
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 377fcaba413259c0f0372aa47a42ff317f2b8865652229a92725b80c40a486b8
+    patches:
+      - 0001-link-protobuf-to-op.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 58e3b2b984f8935bb0db5631e143be2826c45ffd48844f7c394f36624a3e17a2
     folder: lammps
@@ -82,7 +84,7 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
+    # - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit

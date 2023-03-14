@@ -1,0 +1,23 @@
+From 6890faee8c3912c54f84a380f2d7201d89cbf41e Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Tue, 14 Mar 2023 18:11:44 -0400
+Subject: [PATCH] link op library to protobuf
+
+---
+ source/op/CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/source/op/CMakeLists.txt b/source/op/CMakeLists.txt
+index fdc7fa7ea..059e72b9a 100644
+--- a/source/op/CMakeLists.txt
++++ b/source/op/CMakeLists.txt
+@@ -56,6 +56,9 @@ add_library(${LIB_DEEPMD_OP} MODULE ${OP_SRC} ${OP_REMAPPER_SRC})
+ # link: libdeepmd libtensorflow_cc libtensorflow_framework
+ target_link_libraries(${LIB_DEEPMD_OP} PRIVATE TensorFlow::tensorflow_framework)
+ target_link_libraries(${LIB_DEEPMD_OP} PRIVATE ${LIB_DEEPMD})
++if(Protobuf_LIBRARY)
++  target_link_libraries(${LIB_DEEPMD_OP} PRIVATE ${Protobuf_LIBRARY})
++endif()
+ if(APPLE)
+   set_target_properties(
+     ${LIB_DEEPMD_OP} PROPERTIES INSTALL_RPATH
