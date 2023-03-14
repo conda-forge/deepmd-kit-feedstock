@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.1.5" %}
+{% set version = "2.2.0" %}
 {% set lammps_version = "stable_23Jun2022_update1" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: a9a657c4f16abda935343d4440c00a0b7da80accbae067bdf98e26973936290c
+    sha256: 377fcaba413259c0f0372aa47a42ff317f2b8865652229a92725b80c40a486b8
     patches:
       - 0001-fix-clang.patch
       - 0002-read-cmake-args.patch
@@ -24,7 +24,7 @@ source:
     folder: lammps
 
 build:
-  number: 2
+  number: 0
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -89,7 +89,7 @@ test:
     - dp test -h
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
-    - dp freeze -o frozen_model.pb 
+    - dp freeze -o frozen_model.pb
     - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
 
 about:
