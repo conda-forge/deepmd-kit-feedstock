@@ -72,7 +72,7 @@ test:
     - deepmd
   requires:
     - pip
-    - lammps
+    - lammps {{ lammps_conda_version }}
   commands:
     - pip check
     - dp -h
