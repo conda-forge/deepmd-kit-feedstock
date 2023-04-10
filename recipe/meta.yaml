@@ -16,7 +16,7 @@ source:
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -59,7 +59,7 @@ requirements:
     - packaging
 
   run_constrained:
-    - lammps {{ lammps_conda_version }}  # [linux]
+    - lammps {{ lammps_conda_version }}
 
 test:
   files:
@@ -72,7 +72,7 @@ test:
     - deepmd
   requires:
     - pip
-    - lammps {{ lammps_conda_version }}
+    - lammps
   commands:
     - pip check
     - dp -h
