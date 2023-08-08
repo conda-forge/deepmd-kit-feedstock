@@ -2,9 +2,9 @@ mpi:
   - mpich
   - openmpi
 tensorflow:
-- '2.11'
+- '2.12'
 libtensorflow_cc:
-- '2.11' 
+- '2.12'
 pin_run_as_build:
   tensorflow:
     min_pin: x.x
