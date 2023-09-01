@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.3" %}
+{% set version = "2.2.4" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -10,13 +10,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 21ae215d5767c7cad9bf23de806f1e7f4b09aee7ef4648851d08c1b6e7260f76
+    sha256: e39ae25f1545b1cbd84b6122d97278414bbef08e1193a84f827ecdc748b8580b
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
 
 build:
-  number: 2
+  number: 0
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
