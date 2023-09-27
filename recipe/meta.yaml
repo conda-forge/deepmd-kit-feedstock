@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.4" %}
+{% set version = "2.2.5" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: e39ae25f1545b1cbd84b6122d97278414bbef08e1193a84f827ecdc748b8580b
+    sha256: 1b019f8fbd6d787bd0c03ef0f8160bfd7b6467f2646db5e3bda9153acf8ae878
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
