@@ -3,12 +3,7 @@ mpi:
   - openmpi
 tensorflow:
 - '2.12'
-libtensorflow_cc:
-- '2.12'
 pin_run_as_build:
   tensorflow:
-    min_pin: x.x
-    max_pin: x.x
-  libtensorflow_cc:
     min_pin: x.x
     max_pin: x.x

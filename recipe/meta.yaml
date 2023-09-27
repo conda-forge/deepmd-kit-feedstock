@@ -36,10 +36,9 @@ requirements:
   host:
     - python
     - pip
-    - scikit-build
+    - scikit-build-core
     - m2r
     - tensorflow
-    - libtensorflow_cc
     - setuptools_scm
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
@@ -47,10 +46,9 @@ requirements:
   run:
     - python
     - tensorflow
-    - libtensorflow_cc
     - numpy
     - scipy
-    - dargs >=0.2.6
+    - dargs >=0.3.5
     - pyyaml
     - {{ mpi }}
     - python-hostlist >=1.21
