@@ -11,6 +11,8 @@ package:
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 1b019f8fbd6d787bd0c03ef0f8160bfd7b6467f2646db5e3bda9153acf8ae878
+    patches:
+      - 0001-cmake-skip-executing-python-when-cross-compiling.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
