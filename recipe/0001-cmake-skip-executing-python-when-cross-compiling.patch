@@ -1,0 +1,26 @@
+From c2ddfa38b372a95c67c7af0013eb51a4551fc3e1 Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Wed, 27 Sep 2023 21:06:12 -0400
+Subject: [PATCH] cmake: skip executing python when cross compiling
+
+When cross compilint, TensorFlow cannot be imported. TENSORFLOW_ROOT
+needs to be given manually.
+---
+ source/cmake/Findtensorflow.cmake | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/source/cmake/Findtensorflow.cmake b/source/cmake/Findtensorflow.cmake
+index 3ebbd4ea..6f288f2d 100644
+--- a/source/cmake/Findtensorflow.cmake
++++ b/source/cmake/Findtensorflow.cmake
+@@ -41,6 +41,7 @@ endif()
+ 
+ if(BUILD_CPP_IF
+    AND USE_TF_PYTHON_LIBS
++   AND NOT CMAKE_CROSSCOMPILING
+    AND NOT SKBUILD
+    AND NOT INSTALL_TENSORFLOW)
+   # Here we try to install libtensorflow_cc.so as well as
+-- 
+2.34.1
+
