@@ -1,0 +1,26 @@
+From c52b8d6bfd24176e65447a68893c1499d807c338 Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Thu, 12 Oct 2023 23:17:40 -0400
+Subject: [PATCH] remove fancy_pypi_readme
+
+---
+ pyproject.toml | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 8c526756..c4cd407a 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -98,9 +98,6 @@ provider-path = "backend"
+ provider = "backend.dynamic_metadata"
+ provider-path = "backend"
+ 
+-[tool.scikit-build.metadata.readme]
+-provider = "scikit_build_core.metadata.fancy_pypi_readme"
+-
+ [[tool.scikit-build.generate]]
+ path = "deepmd_cli/_version.py"
+ template = '''
+-- 
+2.34.1
+
