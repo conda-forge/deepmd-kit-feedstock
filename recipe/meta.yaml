@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.5" %}
+{% set version = "2.2.6" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 1b019f8fbd6d787bd0c03ef0f8160bfd7b6467f2646db5e3bda9153acf8ae878
+    sha256: 3a4c61d9977b85d1600085dde67d3950f255ea2fcf12e9139d4d369167fce563
     patches:
       - 0001-cmake-skip-executing-python-when-cross-compiling.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
