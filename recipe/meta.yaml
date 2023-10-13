@@ -37,7 +37,7 @@ requirements:
     - python
     - pip
     - scikit-build-core
-    - m2r
+    - hatch-fancy-pypi-readme
     - tensorflow
     - setuptools_scm
     - {{ mpi }}
