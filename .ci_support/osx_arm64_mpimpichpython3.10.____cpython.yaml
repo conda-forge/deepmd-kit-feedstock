@@ -3,7 +3,7 @@ MACOSX_DEPLOYMENT_TARGET:
 c_compiler:
 - clang
 c_compiler_version:
-- '15'
+- '16'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,9 +13,7 @@ cuda_compiler_version:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '15'
-libtensorflow_cc:
-- '2.12'
+- '16'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:
@@ -25,9 +23,6 @@ mpich:
 openmpi:
 - '4'
 pin_run_as_build:
-  libtensorflow_cc:
-    min_pin: x.x
-    max_pin: x.x
   python:
     min_pin: x.x
     max_pin: x.x
