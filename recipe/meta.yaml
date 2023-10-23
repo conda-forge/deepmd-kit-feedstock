@@ -42,6 +42,7 @@ requirements:
     - setuptools_scm
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
+    - lammps {{ lammps_conda_version }}
 
   run:
     - python
@@ -70,7 +71,7 @@ test:
     - deepmd
   requires:
     - pip
-    - lammps
+    - lammps {{ lammps_conda_version }}
   commands:
     - pip check
     - dp -h
