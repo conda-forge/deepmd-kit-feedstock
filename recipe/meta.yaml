@@ -51,7 +51,7 @@ requirements:
     # typeguard gives wrong type-extension version, have to manually assign the upper limitation
     # https://github.com/conda-forge/typeguard-feedstock/pull/41
     # TODO: remove for TF 2.14
-    - typeguard <4
+    - typeguard <4.0.1
     - dargs >=0.3.5
     - pyyaml
     - {{ mpi }}
