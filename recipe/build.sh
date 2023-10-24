@@ -20,6 +20,8 @@ DP_VARIANT=${DP_VARIANT} \
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
+export LDFLAGS="-labsl_status ${LDFLAGS}"
+
 cmake -D USE_TF_PYTHON_LIBS=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
