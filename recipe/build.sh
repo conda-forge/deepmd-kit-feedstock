@@ -13,12 +13,14 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
     export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_ROOT=${TENSORFLOW_ROOT}"
 fi
+export LDFLAGS="-labsl_status ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
 
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
+
 
 cmake -D USE_TF_PYTHON_LIBS=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
