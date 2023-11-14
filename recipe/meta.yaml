@@ -16,7 +16,7 @@ source:
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -48,10 +48,6 @@ requirements:
     - tensorflow
     - numpy
     - scipy
-    # typeguard gives wrong type-extension version, have to manually assign the upper limitation
-    # https://github.com/conda-forge/typeguard-feedstock/pull/41
-    # TODO: remove for TF 2.14
-    - typeguard <4.0.1
     - dargs >=0.3.5
     - pyyaml
     - {{ mpi }}
