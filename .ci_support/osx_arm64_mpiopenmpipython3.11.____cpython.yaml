@@ -34,7 +34,7 @@ python:
 target_platform:
 - osx-arm64
 tensorflow:
-- '2.13'
+- '2.14'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
