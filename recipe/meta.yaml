@@ -33,7 +33,7 @@ requirements:
     - ninja
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - {{ mpi }} # [build_platform != target_platform and mpi == "openmpi"]
+    - {{ mpi }}  # [build_platform != target_platform and mpi == "openmpi"]
 
   host:
     - python
