@@ -65,7 +65,8 @@ test:
   files:
     - water_se_a.json
     - water.lmp
-    - in.lammps
+    - in.lammps  # [linux and mpi == 'mpich']
+    - in_plugin.lammps  # [osx and mpi == 'mpich']
   source_files:
     - examples/water/data
   imports:
