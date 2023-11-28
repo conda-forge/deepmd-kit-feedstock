@@ -16,7 +16,7 @@ source:
     folder: lammps
 
 build:
-  number: 2
+  number: 3
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
@@ -65,7 +65,8 @@ test:
   files:
     - water_se_a.json
     - water.lmp
-    - in.lammps
+    - in.lammps  # [linux and mpi == 'mpich']
+    - in_plugin.lammps  # [osx and mpi == 'mpich']
   source_files:
     - examples/water/data
   imports:
@@ -82,7 +83,8 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [mpi == 'mpich']
+    - mpiexec -n 1 lmp_mpi -in in.lammps  # [linux and mpi == 'mpich']
+    - mpiexec -n 1 lmp_mpi -in in_plugin.lammps  # [osx and mpi == 'mpich']
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
