@@ -1,0 +1,30 @@
+From 8ccec49ac29b484ea25ab7159baed7d9a3d9dfdb Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Sat, 2 Dec 2023 18:20:53 -0500
+Subject: [PATCH 1/2] set rpath for symlink and macos
+
+Signed-off-by: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+---
+ source/lmp/plugin/CMakeLists.txt | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/source/lmp/plugin/CMakeLists.txt b/source/lmp/plugin/CMakeLists.txt
+index bfc225341..e6dc0fc99 100644
+--- a/source/lmp/plugin/CMakeLists.txt
++++ b/source/lmp/plugin/CMakeLists.txt
+@@ -96,10 +96,13 @@ if(DEFINED LAMMPS_SOURCE_ROOT OR DEFINED LAMMPS_VERSION)
+   endif()
+   if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
+     set_target_properties(${libname} PROPERTIES LINK_FLAGS
+-                                                "-Wl,-undefined,dynamic_lookup")
++                                                "-Wl,-undefined,dynamic_lookup"
++						INSTALL_RPATH
++      						"@loader_path:${TensorFlow_LIBRARY_PATH}:@loader_path/.."
++      )
+   else()
+     set_target_properties(
+-      ${libname} PROPERTIES INSTALL_RPATH "$ORIGIN;${TensorFlow_LIBRARY_PATH}"
++      ${libname} PROPERTIES INSTALL_RPATH "$ORIGIN;${TensorFlow_LIBRARY_PATH};$ORIGIN/.."
+                             LINK_FLAGS "-rdynamic")
+   endif()
+   target_compile_definitions(
