@@ -44,6 +44,7 @@ requirements:
     - setuptools_scm
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
+    - libprotobuf 3.21
 
   run:
     - python
@@ -57,6 +58,7 @@ requirements:
     - h5py
     - wcmatch
     - packaging
+    - libprotobuf 3.21
 
   run_constrained:
     - lammps {{ lammps_conda_version }}
