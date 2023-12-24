@@ -13,7 +13,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
     export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_ROOT=${TENSORFLOW_ROOT}"
 fi
-export LDFLAGS="-labsl_status ${LDFLAGS}"
+export LDFLAGS="-labsl_status -labsl_raw_logging_internal ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
@@ -26,7 +26,6 @@ cmake -D USE_TF_PYTHON_LIBS=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
-      -D CMAKE_FIND_PACKAGE_PREFER_CONFIG=ON \  # https://github.com/protocolbuffers/protobuf/issues/12292
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make #-j${CPU_COUNT}
