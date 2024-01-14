@@ -1,0 +1,35 @@
+From 7ac708a217e7e4d8780e9eb3fc06bb1ef29b0e1a Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Sat, 13 Jan 2024 08:41:01 -0500
+Subject: [PATCH] workaround to fix
+ https://github.com/conda-forge/tensorflow-feedstock/issues/364
+
+Signed-off-by: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+---
+ deepmd/__init__.py | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/deepmd/__init__.py b/deepmd/__init__.py
+index b02817b6..49f6f7ef 100644
+--- a/deepmd/__init__.py
++++ b/deepmd/__init__.py
+@@ -1,4 +1,16 @@
+ # SPDX-License-Identifier: LGPL-3.0-or-later
++# workaround to fix https://github.com/conda-forge/tensorflow-feedstock/issues/364
++import ctypes
++import importlib
++from pathlib import (
++    Path,
++)
++
++module_spec = importlib.util.find_spec("tensorflow")
++ctypes.CDLL(
++    str(Path(module_spec.origin).parent / "python" / "_pywrap_tensorflow_internal.so")
++)
++
+ """Root of the deepmd package, exposes all public classes and submodules."""
+ 
+ try:
+-- 
+2.34.1
+
