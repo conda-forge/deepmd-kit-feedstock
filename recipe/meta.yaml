@@ -46,12 +46,13 @@ requirements:
     - pip
     - scikit-build-core
     - hatch-fancy-pypi-readme
-    - tensorflow
+    - tensorflow  # [not (cuda_compiler_version or "").startswith("11")]
+    # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
+    - tensorflow 2.14.*  # [(cuda_compiler_version or "").startswith("11")]
     - tensorflow * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
-    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
 
   run:
