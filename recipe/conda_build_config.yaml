@@ -1,9 +1,9 @@
 mpi:
   - mpich
   - openmpi
-tensorflow:
 # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-  - '2.14'  # [cuda_compiler_version == '11.8']
+tensorflow:  # [cuda_compiler_version == '11.8']
+  - '2.14'   # [cuda_compiler_version == '11.8']
 pin_run_as_build:
   tensorflow:
     min_pin: x.x
