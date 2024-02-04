@@ -54,6 +54,7 @@ requirements:
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
 
   run:
     - python
