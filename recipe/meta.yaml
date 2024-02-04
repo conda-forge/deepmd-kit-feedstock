@@ -61,7 +61,7 @@ requirements:
     - tensorflow * {{ proc_type }}*
     - numpy
     - scipy
-    - dargs >=0.3.5
+    - dargs >=0.4.1
     - pyyaml
     - {{ mpi }}
     - python-hostlist >=1.21
