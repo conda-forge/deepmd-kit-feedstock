@@ -7,7 +7,7 @@ cdt_name:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge main
+- conda-forge deepmd-kit_dev
 cuda_compiler:
 - nvcc
 cuda_compiler_version:
@@ -32,7 +32,9 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.9.* *_cpython
+pytorch:
+- '2.1'
 target_platform:
 - linux-64
 tensorflow:
