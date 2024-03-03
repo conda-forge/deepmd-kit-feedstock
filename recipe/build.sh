@@ -23,9 +23,12 @@ cd $SRC_DIR/source/build
 
 
 cmake -D USE_TF_PYTHON_LIBS=TRUE \
+      -D ENABLE_TENSORFLOW=TRUE \
+      -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
+      -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make #-j${CPU_COUNT}
