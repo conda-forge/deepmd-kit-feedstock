@@ -66,6 +66,7 @@ requirements:
     - libcurand-dev  # [(cuda_compiler_version or "").startswith("12")]
     - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
 
   run:
     - python
