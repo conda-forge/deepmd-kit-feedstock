@@ -62,7 +62,7 @@ requirements:
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
     - libcublas-dev    # [(cuda_compiler_version or "").startswith("12")]
-    - libcusolver-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - libcurand-dev  # [(cuda_compiler_version or "").startswith("12")]
     - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
 
   run:
