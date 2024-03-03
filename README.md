@@ -300,14 +300,14 @@ Current release info
 Installing deepmd-kit
 =====================
 
-Installing `deepmd-kit` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `deepmd-kit` from the `conda-forge/label/deepmd-kit_dev` channel can be achieved by adding `conda-forge/label/deepmd-kit_dev` to your channels with:
 
 ```
-conda config --add channels conda-forge
+conda config --add channels conda-forge/label/deepmd-kit_dev
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `deepmd-kit` can be installed with `conda`:
+Once the `conda-forge/label/deepmd-kit_dev` channel has been enabled, `deepmd-kit` can be installed with `conda`:
 
 ```
 conda install deepmd-kit
@@ -322,26 +322,26 @@ mamba install deepmd-kit
 It is possible to list all of the versions of `deepmd-kit` available on your platform with `conda`:
 
 ```
-conda search deepmd-kit --channel conda-forge
+conda search deepmd-kit --channel conda-forge/label/deepmd-kit_dev
 ```
 
 or with `mamba`:
 
 ```
-mamba search deepmd-kit --channel conda-forge
+mamba search deepmd-kit --channel conda-forge/label/deepmd-kit_dev
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search deepmd-kit --channel conda-forge
+mamba repoquery search deepmd-kit --channel conda-forge/label/deepmd-kit_dev
 
 # List packages depending on `deepmd-kit`:
-mamba repoquery whoneeds deepmd-kit --channel conda-forge
+mamba repoquery whoneeds deepmd-kit --channel conda-forge/label/deepmd-kit_dev
 
 # List dependencies of `deepmd-kit`:
-mamba repoquery depends deepmd-kit --channel conda-forge
+mamba repoquery depends deepmd-kit --channel conda-forge/label/deepmd-kit_dev
 ```
 
 

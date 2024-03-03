@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.9" %}
+{% set version = "3.0.0a0" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,7 +11,10 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: b14419367905b6dd938b9c54f91977c59c25da905a34a7b42585af4805fc4077
+    sha256: 36e9dc1b18313139b1e9482e06ec214e15a87ee74f5f9d565b8719998e088920
+    patches:
+      - 0001-fix-libtorch-not-found-in-RPATH.patch
+      - 0002-add-quote-for-macos.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
@@ -50,22 +53,32 @@ requirements:
     # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
     - tensorflow 2.14.*  # [(cuda_compiler_version or "").startswith("11")]
     - tensorflow * {{ proc_type }}*
+    - pytorch  # [not (cuda_compiler_version or "").startswith("11")]
+    - pytorch * {{ proc_type }}*
+    - pytorch 2.0.*  # [(cuda_compiler_version or "").startswith("11")]
     - setuptools_scm
     - {{ mpi }}
     - cub  # [cuda_compiler_version == '10.2']
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
+    # require by pytorch
+    - libcublas-dev    # [(cuda_compiler_version or "").startswith("12")]
+    - libcurand-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
 
   run:
     - python
     - tensorflow
     - tensorflow * {{ proc_type }}*
+    - pytorch
+    - pytorch * {{ proc_type }}*
     - numpy
     - scipy
     - dargs >=0.4.1
     - pyyaml
     - {{ mpi }}
-    - python-hostlist >=1.21
     - h5py
     - wcmatch
     - packaging

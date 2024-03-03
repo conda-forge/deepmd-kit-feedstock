@@ -1,0 +1,25 @@
+From 5c8e85091de282c756f296f19761dbc0fc3c9e29 Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Sun, 3 Mar 2024 14:32:39 -0500
+Subject: [PATCH 2/2] add quote for macos
+
+---
+ source/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/CMakeLists.txt b/source/CMakeLists.txt
+index 41e596f8..93101301 100644
+--- a/source/CMakeLists.txt
++++ b/source/CMakeLists.txt
+@@ -155,7 +155,7 @@ endif()
+ if(ENABLE_PYTORCH AND NOT DEEPMD_C_ROOT)
+   find_package(Torch REQUIRED)
+   string(REGEX MATCH "_GLIBCXX_USE_CXX11_ABI=([0-9]+)" CXXABI_PT_MATCH
+-               ${TORCH_CXX_FLAGS})
++               "${TORCH_CXX_FLAGS}")
+   if(CXXABI_PT_MATCH)
+     message(STATUS "PyTorch CXX11 ABI: ${CMAKE_MATCH_1}")
+     if(DEFINED OP_CXX_ABI)
+-- 
+2.43.0
+

@@ -1,5 +1,17 @@
 set -e
 
+# for libtorch
+if [[ ${cuda_compiler_version} == 11.2 ]]; then
+    export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
+elif [[ ${cuda_compiler_version} == 11.8 ]]; then
+    export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"
+elif [[ ${cuda_compiler_version} == 12.0 ]]; then
+    export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0+PTX"
+elif [[ ${cuda_compiler_version} != "None" ]]; then
+    echo "unsupported cuda version."
+    exit 1
+fi
+
 if [[ ${cuda_compiler_version} != "None" ]]; then
     DEEPMD_USE_CUDA_TOOLKIT=TRUE
     DP_VARIANT=cuda
@@ -23,9 +35,12 @@ cd $SRC_DIR/source/build
 
 
 cmake -D USE_TF_PYTHON_LIBS=TRUE \
+      -D ENABLE_TENSORFLOW=TRUE \
+      -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
+      -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make #-j${CPU_COUNT}
