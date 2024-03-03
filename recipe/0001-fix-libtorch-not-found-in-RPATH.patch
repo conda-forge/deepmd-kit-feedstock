@@ -1,4 +1,4 @@
-From 5d6b33423f41e62b2355adcf2d49fb0c956b6094 Mon Sep 17 00:00:00 2001                                             
+From 5d6b33423f41e62b2355adcf2d49fb0c956b6094 Mon Sep 17 00:00:00 2001
 From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
 Date: Sun, 3 Mar 2024 06:30:15 -0500
 Subject: [PATCH] fix libtorch not found in $RPATH
@@ -27,3 +27,4 @@ index cd42594f..2802498b 100644
    target_link_libraries(${libname} PRIVATE coverage_config)
 -- 
 2.43.0
+
