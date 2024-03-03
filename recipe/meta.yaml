@@ -14,6 +14,7 @@ source:
     sha256: 36e9dc1b18313139b1e9482e06ec214e15a87ee74f5f9d565b8719998e088920
     patches:
       - 0001-fix-libtorch-not-found-in-RPATH.patch
+      - 0002-add-quote-for-macos.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
