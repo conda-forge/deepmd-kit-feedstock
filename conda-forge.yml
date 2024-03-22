@@ -9,3 +9,7 @@ github:
   branch_name: main
   tooling_branch_name: main
 test: native_and_emulated
+os_version:
+  linux_64: cos7
+  linux_aarch64: cos7
+  linux_ppc64le: cos7

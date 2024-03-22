@@ -1,0 +1,22 @@
+From adf640a49cad144d707686e629f24756e28968f6 Mon Sep 17 00:00:00 2001
+From: Chenxing Luo <chenxing.luo@gmail.com>
+Date: Sat, 16 Mar 2024 18:53:43 -0400
+Subject: [PATCH] Fix LAMMPS plugin symlink path on macOS platform
+
+---
+ source/lmp/plugin/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/lmp/plugin/CMakeLists.txt b/source/lmp/plugin/CMakeLists.txt
+index bfc2253412..4fdae7ac5b 100644
+--- a/source/lmp/plugin/CMakeLists.txt
++++ b/source/lmp/plugin/CMakeLists.txt
+@@ -126,7 +126,7 @@ if(DEFINED LAMMPS_SOURCE_ROOT OR DEFINED LAMMPS_VERSION)
+       install(
+         CODE "execute_process( \
+         COMMAND ${CMAKE_COMMAND} -E create_symlink \
+-		../${CMAKE_SHARED_LIBRARY_PREFIX}${libname}${CMAKE_SHARED_LIBRARY_SUFFIX} \
++		../${CMAKE_SHARED_MODULE_PREFIX}${libname}${CMAKE_SHARED_MODULE_SUFFIX} \
+         ${CMAKE_INSTALL_PREFIX}/lib/${libname}/${PLUGINNAME}   \
+         )")
+     endif()
