@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.9" %}
+{% set version = "2.2.10" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,15 +11,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: b14419367905b6dd938b9c54f91977c59c25da905a34a7b42585af4805fc4077
-    patches:
-      - 3473.patch
+    sha256: c31ba1c8a3e874edbbaddc8ec61725a1b74734acb45578f820ab294835d12638
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
 
 build:
-  number: 1
+  number: 0
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -33,7 +31,7 @@ build:
 
 requirements:
   build:
-    - sysroot_{{ target_platform }} 2.17  # [linux]
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
