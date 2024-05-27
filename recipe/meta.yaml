@@ -29,7 +29,7 @@ build:
   skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
   skip: true  # [py<39]
   # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-  skip: ture  # [py312 and cuda_compiler_version in ("11.2", "11.8")]
+  skip: ture  # [py==312 and cuda_compiler_version in ("11.2", "11.8")]
 
 requirements:
   build:
