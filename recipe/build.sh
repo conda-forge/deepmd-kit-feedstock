@@ -25,6 +25,9 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
     export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_ROOT=${TENSORFLOW_ROOT}"
 fi
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
+  export OPAL_PREFIX="$PREFIX"
+fi
 export LDFLAGS="-labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
