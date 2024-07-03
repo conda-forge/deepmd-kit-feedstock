@@ -27,6 +27,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
 fi
 export LDFLAGS="-labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
+    DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
 
