@@ -28,9 +28,12 @@ build:
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
   skip: true  # [py<39]
+  # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
+  skip: true  # [py==312 and cuda_compiler_version in ("11.2", "11.8")]
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
@@ -89,16 +92,16 @@ requirements:
 test:
   files:
     - water_se_a.json
-    - water.lmp
-    - in.lammps  # [linux and mpi == 'mpich']
-    - in_plugin.lammps  # [osx and mpi == 'mpich']
+    - water.lmp  # [py<312]
+    - in.lammps  # [py<312]
   source_files:
     - examples/water/data
   imports:
     - deepmd
   requires:
     - pip
-    - lammps
+    # this version of lammps doesn't have py312
+    - lammps  # [py<312]
   commands:
     - pip check
     - dp -h
@@ -108,8 +111,9 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [linux and mpi == 'mpich']
-    - mpiexec -n 1 lmp_mpi -in in_plugin.lammps  # [osx and mpi == 'mpich']
+    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false # [mpi == "openmpi" and py<312]
+OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi" and py<312]
+    - mpiexec -n 1 lmp_mpi -in in.lammps  # [py<312]
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
