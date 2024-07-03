@@ -102,6 +102,8 @@ test:
     - pip
     # this version of lammps doesn't have py312
     - lammps  # [py<312]
+    # workaround until conda-forge/conda-forge-repodata-patches-feedstock#787 is merged
+    - libpnetcdf 1.12.3  # [py<312]
   commands:
     - pip check
     - dp -h
