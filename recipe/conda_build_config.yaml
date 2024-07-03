@@ -15,4 +15,4 @@ MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
 
 # alpha version
 channel_targets:
-  - conda-forge deepmd-kit_dev
+  - conda-forge deepmd-kit_rc

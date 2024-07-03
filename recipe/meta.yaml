@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0a0" %}
+{% set version = "3.0.0b0" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,10 +11,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 36e9dc1b18313139b1e9482e06ec214e15a87ee74f5f9d565b8719998e088920
-    patches:
-      - 0001-fix-libtorch-not-found-in-RPATH.patch
-      - 0002-add-quote-for-macos.patch
+    sha256: 479776ee086db5d348124a840cd847bf7edd5a3cf321937c5ab29c98b5477a02
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
@@ -37,7 +34,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
-    - cmake >=3.7
+    - cmake >=3.23
     - make  # [unix]
     - ninja
     - python                                 # [build_platform != target_platform]
@@ -76,12 +73,15 @@ requirements:
     - pytorch * {{ proc_type }}*
     - numpy
     - scipy
-    - dargs >=0.4.1
+    - dargs >=0.4.7
     - pyyaml
     - {{ mpi }}
     - h5py
     - wcmatch
     - packaging
+    - ml_dtypes
+    - mendeleev
+    - array-api-compat
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
