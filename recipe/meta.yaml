@@ -37,7 +37,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
-    - cmake >=3.7
+    - cmake >=3.23
     - make  # [unix]
     - ninja
     - python                                 # [build_platform != target_platform]
@@ -90,6 +90,8 @@ test:
     - pip
     # this version of lammps doesn't have py312
     - lammps  # [py<312]
+    # workaround until conda-forge/conda-forge-repodata-patches-feedstock#787 is merged
+    - libpnetcdf 1.12.3  # [py<312]
   commands:
     - pip check
     - dp -h
