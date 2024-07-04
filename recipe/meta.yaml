@@ -30,7 +30,7 @@ build:
   skip: true  # [py<39]
   # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
   skip: true  # [py==312 and cuda_compiler_version in ("11.2", "11.8")]
-  skip: true  # [py==312]
+  skip: true  # [py==312 and linux]
 
 requirements:
   build:
