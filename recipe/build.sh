@@ -1,4 +1,4 @@
-set -e
+set -evx
 
 # for libtorch
 if [[ ${cuda_compiler_version} == 11.2 ]]; then
@@ -25,8 +25,12 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
     export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
     export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_ROOT=${TENSORFLOW_ROOT}"
 fi
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
+  export OPAL_PREFIX="$PREFIX"
+fi
 export LDFLAGS="-labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
+    DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
 
@@ -43,7 +47,7 @@ cmake -D USE_TF_PYTHON_LIBS=TRUE \
       -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
-make #-j${CPU_COUNT}
+make VERBOSE=1 #-j${CPU_COUNT}
 make install
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.

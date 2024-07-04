@@ -10,9 +10,15 @@ pin_run_as_build:
 # https://github.com/abseil/abseil-cpp/issues/1513
 MACOSX_SDK_VERSION:        # [osx and x86_64]
   - "10.13"                # [osx and x86_64]
-MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
+c_stdlib_version:          # [osx and x86_64]
   - "10.13"                # [osx and x86_64]
 
-# alpha version
+# beta version
 channel_targets:
-  - conda-forge deepmd-kit_dev
+  - conda-forge deepmd-kit_rc
+# For the unclear reason, pytorch 2.3 + tensorflow 2.16 on linux give segfault in abseil
+# https://github.com/conda-forge/deepmd-kit-feedstock/pull/78#discussion_r1664733365
+pytorch:                   # [linux]
+- '2.1'                    # [linux]
+tensorflow:                # [linux]
+- '2.15'                   # [linux]
