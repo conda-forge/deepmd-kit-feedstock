@@ -13,9 +13,9 @@ channel_sources:
 channel_targets:
 - conda-forge deepmd-kit_rc
 cuda_compiler:
-- None
+- cuda-nvcc
 cuda_compiler_version:
-- None
+- '12.0'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -38,11 +38,11 @@ pin_run_as_build:
 python:
 - 3.11.* *_cpython
 pytorch:
-- '2.1'
+- '2.4'
 target_platform:
 - linux-64
 tensorflow:
-- '2.15'
+- '2.17'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
