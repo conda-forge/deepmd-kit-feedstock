@@ -19,6 +19,6 @@ channel_targets:
 # For the unclear reason, pytorch 2.3 + tensorflow 2.16 on linux give segfault in abseil
 # https://github.com/conda-forge/deepmd-kit-feedstock/pull/78#discussion_r1664733365
 pytorch:                   # [linux]
-- '2.1'                    # [linux]
+- '2.4'                    # [linux]
 tensorflow:                # [linux]
-- '2.15'                   # [linux]
+- '2.17'                   # [linux]

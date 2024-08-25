@@ -11,13 +11,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 88e09e89600120d21c593efd2074edb13efedc16f995932d62dd7e3e8db12d86
+    sha256: 44fdb3505bb7e1a66214b00b257e79e6a3a3463f99e9843322ccafb2ff2ed6b1
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
