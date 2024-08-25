@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0b2" %}
+{% set version = "3.0.0b3" %}
 {% set lammps_version = "stable_2Aug2023" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
