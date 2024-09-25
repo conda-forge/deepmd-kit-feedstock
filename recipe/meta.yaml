@@ -13,7 +13,7 @@ source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: d22893a08c2556c5cb29682378105849cf672545c91ee52b10a97da6e9075ac3
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
-    sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
+    sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
