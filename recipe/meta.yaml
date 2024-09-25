@@ -80,8 +80,8 @@ requirements:
 test:
   files:
     - water_se_a.json
-    - water.lmp  # [py<312]
-    - in.lammps  # [py<312]
+    - water.lmp
+    - in.lammps
   source_files:
     - examples/water/data
   imports:
