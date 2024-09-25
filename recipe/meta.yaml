@@ -1,6 +1,6 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0b3" %}
-{% set lammps_version = "stable_2Aug2023" %}
+{% set version = "3.0.0b4" %}
+{% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
 {% set proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
@@ -11,9 +11,9 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 88e09e89600120d21c593efd2074edb13efedc16f995932d62dd7e3e8db12d86
+    sha256: 5ad94d3529897a9c50fe44abeabe69b31d75d40e867cb141dbd0e66f2be346df
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
-    sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
+    sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
@@ -93,18 +93,15 @@ requirements:
 test:
   files:
     - water_se_a.json
-    - water.lmp  # [py<312]
-    - in.lammps  # [py<312]
+    - water.lmp
+    - in.lammps
   source_files:
     - examples/water/data
   imports:
     - deepmd
   requires:
     - pip
-    # this version of lammps doesn't have py312
-    - lammps  # [py<312]
-    # workaround until conda-forge/conda-forge-repodata-patches-feedstock#787 is merged
-    - libpnetcdf 1.12.3  # [py<312]
+    - lammps
   commands:
     - pip check
     - dp -h
@@ -114,8 +111,8 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
-    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi" and py<312]
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [py<312]
+    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
+    - mpiexec -n 1 lmp_mpi -in in.lammps
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
