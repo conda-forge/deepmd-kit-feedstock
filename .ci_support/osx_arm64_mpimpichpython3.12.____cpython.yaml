@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -14,12 +14,14 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge deepmd-kit_rc
+cuda_compiler:
+- None
 cuda_compiler_version:
 - None
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:
@@ -27,7 +29,7 @@ mpi:
 mpich:
 - '4'
 openmpi:
-- '4'
+- '5'
 pin_run_as_build:
   python:
     min_pin: x.x
