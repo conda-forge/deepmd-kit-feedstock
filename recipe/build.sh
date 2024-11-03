@@ -28,7 +28,8 @@ fi
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
   export OPAL_PREFIX="$PREFIX"
 fi
-export LDFLAGS="-labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
+# -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
+export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
