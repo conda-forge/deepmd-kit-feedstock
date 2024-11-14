@@ -18,5 +18,5 @@ channel_targets:
   - conda-forge deepmd-kit_rc
 pytorch:                   # [linux]
 - '2.4'                    # [linux]
-tensorflow:                # [linux]
-- '2.17'                   # [linux]
+tensorflow:
+- '2.17'
