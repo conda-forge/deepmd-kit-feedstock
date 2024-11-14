@@ -86,10 +86,10 @@ requirements:
     - mendeleev
     - array-api-compat
     # jax
-    - jax
-    - jaxlib * {{ proc_type }}*
-    - flax
-    - orbax-checkpoint
+    - jax >=0.4.33  # [py>=310]
+    - jaxlib * {{ proc_type }}*  # [py>=310]
+    - flax >=0.10.0 # [py>=310]
+    - orbax-checkpoint  # [py>=310]
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
@@ -105,7 +105,7 @@ test:
     - deepmd
     - deepmd.tf
     - deepmd.pt
-    - deepmd.jax
+    - deepmd.jax  # [py>=310]
   requires:
     - pip
     - lammps
