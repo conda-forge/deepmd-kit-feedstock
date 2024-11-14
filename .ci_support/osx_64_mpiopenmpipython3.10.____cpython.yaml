@@ -40,7 +40,7 @@ pin_run_as_build:
 python:
 - 3.10.* *_cpython
 pytorch:
-- '2.5'
+- '2.4'
 target_platform:
 - osx-64
 tensorflow:
