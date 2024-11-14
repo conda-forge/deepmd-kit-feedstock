@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0b4" %}
+{% set version = "3.0.0rc0" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,13 +11,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 5ad94d3529897a9c50fe44abeabe69b31d75d40e867cb141dbd0e66f2be346df
+    sha256: e1b73fdfbc39fe8b20e6396826da6ba6d33c4e007513510a48aebc90efd5e972
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
-  number: 1
+  number: 0
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -74,7 +74,7 @@ requirements:
     - tensorflow * {{ proc_type }}*
     - pytorch
     - pytorch * {{ proc_type }}*
-    - numpy
+    - numpy >=1.21
     - scipy
     - dargs >=0.4.7
     - pyyaml
@@ -85,6 +85,11 @@ requirements:
     - ml_dtypes
     - mendeleev
     - array-api-compat
+    # jax
+    - jax
+    - jaxlib * {{ proc_type }}*
+    - flax
+    - orbax-checkpoint
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
@@ -98,6 +103,9 @@ test:
     - examples/water/data
   imports:
     - deepmd
+    - deepmd.tf
+    - deepmd.pt
+    - deepmd.jax
   requires:
     - pip
     - lammps
