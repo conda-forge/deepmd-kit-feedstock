@@ -12,3 +12,8 @@ MACOSX_SDK_VERSION:        # [osx and x86_64]
   - "10.13"                # [osx and x86_64]
 c_stdlib_version:          # [osx and x86_64]
   - "10.13"                # [osx and x86_64]
+
+pytorch:                   # [linux]
+- '2.4'                    # [linux]
+tensorflow:
+- '2.17'
