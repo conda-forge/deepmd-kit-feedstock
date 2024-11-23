@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "2.2.11" %}
+{% set version = "3.0.0" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,13 +11,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: d22893a08c2556c5cb29682378105849cf672545c91ee52b10a97da6e9075ac3
+    sha256: 4df1091ce90dbea87734a20c6d826b8cbe80ac44646cb592c2e8586be319023c
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
-  number: 2
+  number: 0
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -26,10 +26,8 @@ build:
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
+  skip: true  # [cuda_compiler_version in ("11.8",)]
   skip: true  # [py<39]
-  # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-  skip: true  # [py==312 and cuda_compiler_version in ("11.2", "11.8")]
 
 requirements:
   build:
@@ -49,30 +47,38 @@ requirements:
     - pip
     - scikit-build-core
     - hatch-fancy-pypi-readme
-    - tensorflow  # [not (cuda_compiler_version or "").startswith("11")]
-    # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-    - tensorflow 2.14.*  # [(cuda_compiler_version or "").startswith("11")]
+    - tensorflow
     - tensorflow * {{ proc_type }}*
+    - pytorch
+    - pytorch * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
-    - cub  # [cuda_compiler_version == '10.2']
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
+    # require by pytorch
+    - libcublas-dev    # [(cuda_compiler_version or "").startswith("12")]
+    - libcurand-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
 
   run:
     - python
     - tensorflow
     - tensorflow * {{ proc_type }}*
-    - tf-keras {{ tensorflow }}  # [not (cuda_compiler_version or "").startswith("11")]
-    - numpy
+    - pytorch
+    - pytorch * {{ proc_type }}*
+    - numpy >=1.21
     - scipy
-    - dargs >=0.4.1
+    - dargs >=0.4.7
     - pyyaml
     - {{ mpi }}
-    - python-hostlist >=1.21
     - h5py
     - wcmatch
     - packaging
+    - ml_dtypes
+    - mendeleev
+    - array-api-compat
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
@@ -86,6 +92,8 @@ test:
     - examples/water/data
   imports:
     - deepmd
+    - deepmd.tf
+    - deepmd.pt
   requires:
     - pip
     - lammps
