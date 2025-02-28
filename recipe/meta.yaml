@@ -28,6 +28,8 @@ build:
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("11.8",)]
   skip: true  # [py<39]
+  # https://github.com/conda-forge/tensorflow-feedstock/issues/419
+  skip: true  # [osx]
 
 requirements:
   build:
@@ -98,7 +100,8 @@ test:
     - pip
     - lammps
   commands:
-    - pip check
+    # https://github.com/conda-forge/mendeleev-feedstock/issues/37
+    - pip check  # [py<312]
     - dp -h
     - dp train -h
     - dp freeze -h
