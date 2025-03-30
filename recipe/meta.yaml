@@ -1,6 +1,6 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0a0" %}
-{% set lammps_version = "stable_2Aug2023" %}
+{% set version = "3.1.0a0" %}
+{% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
 {% set proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
@@ -11,12 +11,9 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 36e9dc1b18313139b1e9482e06ec214e15a87ee74f5f9d565b8719998e088920
-    patches:
-      - 0001-fix-libtorch-not-found-in-RPATH.patch
-      - 0002-add-quote-for-macos.patch
+    sha256: 07e295a80f824aa3eabcf708a335d2f4744fca7e512b40c989cc882b44d07da7
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
-    sha256: 48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df
+    sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
@@ -29,15 +26,15 @@ build:
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
-  skip: true  # [py<39]
+  skip: true  # [cuda_compiler_version in ("11.8",)]
 
 requirements:
   build:
+    - {{ stdlib("c") }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
-    - cmake >=3.7
+    - cmake >=3.23
     - make  # [unix]
     - ninja
     - python                                 # [build_platform != target_platform]
@@ -49,16 +46,12 @@ requirements:
     - pip
     - scikit-build-core
     - hatch-fancy-pypi-readme
-    - tensorflow  # [not (cuda_compiler_version or "").startswith("11")]
-    # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-    - tensorflow 2.14.*  # [(cuda_compiler_version or "").startswith("11")]
+    - tensorflow
     - tensorflow * {{ proc_type }}*
-    - pytorch  # [not (cuda_compiler_version or "").startswith("11")]
+    - pytorch
     - pytorch * {{ proc_type }}*
-    - pytorch 2.0.*  # [(cuda_compiler_version or "").startswith("11")]
     - setuptools_scm
     - {{ mpi }}
-    - cub  # [cuda_compiler_version == '10.2']
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
@@ -74,14 +67,17 @@ requirements:
     - tensorflow * {{ proc_type }}*
     - pytorch
     - pytorch * {{ proc_type }}*
-    - numpy
+    - numpy >=1.21
     - scipy
-    - dargs >=0.4.1
+    - dargs >=0.4.7
     - pyyaml
     - {{ mpi }}
     - h5py
     - wcmatch
     - packaging
+    - ml_dtypes
+    - mendeleev
+    - array-api-compat
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
@@ -90,17 +86,19 @@ test:
   files:
     - water_se_a.json
     - water.lmp
-    - in.lammps  # [linux and mpi == 'mpich']
-    - in_plugin.lammps  # [osx and mpi == 'mpich']
+    - in.lammps
   source_files:
     - examples/water/data
   imports:
     - deepmd
+    - deepmd.tf
+    - deepmd.pt
   requires:
     - pip
     - lammps
   commands:
-    - pip check
+    # https://github.com/conda-forge/mendeleev-feedstock/issues/37
+    - pip check  # [py<312]
     - dp -h
     - dp train -h
     - dp freeze -h
@@ -108,8 +106,8 @@ test:
     - mv examples/water/data/data_0 ./data
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [linux and mpi == 'mpich']
-    - mpiexec -n 1 lmp_mpi -in in_plugin.lammps  # [osx and mpi == 'mpich']
+    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
+    - mpiexec -n 1 lmp_mpi -in in.lammps
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
