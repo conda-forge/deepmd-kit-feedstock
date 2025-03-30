@@ -27,7 +27,7 @@ mpi:
 mpich:
 - '4'
 openmpi:
-- '4'
+- '5'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -36,7 +36,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.9.* *_cpython
+- 3.10.* *_cpython
 pytorch:
 - '2.6'
 target_platform:
