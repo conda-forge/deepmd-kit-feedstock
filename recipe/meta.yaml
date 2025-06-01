@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.0.0rc0" %}
+{% set version = "3.1.0rc0" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,7 +11,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: e1b73fdfbc39fe8b20e6396826da6ba6d33c4e007513510a48aebc90efd5e972
+    sha256: d1140ea2430675e67da1148838c378695d820c97da521af3820448f7d39f6945
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
@@ -26,10 +26,7 @@ build:
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
-  skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
-  skip: true  # [py<39]
-  # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-  skip: true  # [py==312 and cuda_compiler_version in ("11.2", "11.8")]
+  skip: true  # [cuda_compiler_version in ("11.8",)]
 
 requirements:
   build:
@@ -49,16 +46,12 @@ requirements:
     - pip
     - scikit-build-core
     - hatch-fancy-pypi-readme
-    - tensorflow  # [not (cuda_compiler_version or "").startswith("11")]
-    # https://github.com/conda-forge/tensorflow-feedstock/pull/367#issuecomment-1890751416
-    - tensorflow 2.14.*  # [(cuda_compiler_version or "").startswith("11")]
+    - tensorflow
     - tensorflow * {{ proc_type }}*
-    - pytorch  # [not (cuda_compiler_version or "").startswith("11")]
+    - pytorch
     - pytorch * {{ proc_type }}*
-    - pytorch 2.0.*  # [(cuda_compiler_version or "").startswith("11")]
     - setuptools_scm
     - {{ mpi }}
-    - cub  # [cuda_compiler_version == '10.2']
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
@@ -104,7 +97,8 @@ test:
     - pip
     - lammps
   commands:
-    - pip check
+    # https://github.com/conda-forge/mendeleev-feedstock/issues/37
+    - pip check  # [py<312]
     - dp -h
     - dp train -h
     - dp freeze -h
