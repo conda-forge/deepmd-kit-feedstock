@@ -11,7 +11,7 @@ package:
 
 source:
   - url: https://github.com/iProzd/deepmd-kit/archive/refs/heads/D0721_edge_readout.zip
-    sha256: eeb6a965674a0d015aef4fe5547f401fd1c1d5d2320e42880a959170925110ca
+    sha256: 7887c12bfab2c2d1a907dcb96c1c8c7fe7995645506666caca4799447f26f799
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
