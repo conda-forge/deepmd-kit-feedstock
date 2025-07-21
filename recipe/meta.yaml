@@ -27,6 +27,8 @@ build:
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("11.8",)]
+  skip: true  # [osx]
+  skip: true  # [py<312]
 
 requirements:
   build:
