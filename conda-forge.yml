@@ -1,6 +1,7 @@
 azure:
   free_disk_space: true
 build_platform:
+  linux_aarch64: default
   osx_arm64: osx_64
 conda_build:
   pkg_format: '2'
