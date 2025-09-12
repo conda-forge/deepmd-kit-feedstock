@@ -29,6 +29,8 @@ build:
   skip: true  # [cuda_compiler_version in ("11.8",)]
   skip: true  # [py==313]
   skip: true  # [aarch64 and cuda_compiler_version != "None"]
+  # TODO: revert after success
+  skip: true  # [not aarch64]
 
 requirements:
   build:
