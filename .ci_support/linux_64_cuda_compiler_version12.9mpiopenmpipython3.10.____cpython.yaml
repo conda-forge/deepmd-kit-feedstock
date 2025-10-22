@@ -10,8 +10,10 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+cuda_compiler:
+- cuda-nvcc
 cuda_compiler_version:
-- None
+- '12.9'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -32,11 +34,11 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.10.* *_cpython
 pytorch:
-- '2.6'
+- '2.7'
 target_platform:
-- linux-aarch64
+- linux-64
 tensorflow:
 - '2.18'
 zip_keys:
