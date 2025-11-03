@@ -38,7 +38,7 @@ pytorch:
 target_platform:
 - linux-aarch64
 tensorflow:
-- '2.18'
+- '2.19'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
