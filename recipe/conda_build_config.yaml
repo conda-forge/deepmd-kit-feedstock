@@ -7,4 +7,5 @@ pin_run_as_build:
     max_pin: x.x
 
 tensorflow:
-- '2.19'
+- '2.19'  # [linux64]
+- '2.18'  # [not linux64]

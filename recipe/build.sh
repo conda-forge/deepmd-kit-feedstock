@@ -30,6 +30,8 @@ fi
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
   export OPAL_PREFIX="$PREFIX"
 fi
+# TF and PT find protobuf conflict
+export CMAKE_ARGS="${CMAKE_ARGS} -D CMAKE_FIND_PACKAGE_PREFER_CONFIG=TRUE"
 # -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
 export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
