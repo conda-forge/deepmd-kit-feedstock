@@ -32,7 +32,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
 fi
 # TF and PT find protobuf conflict
 if [ "$(uname)" == "Darwin" ]; then
-    sed -i '' "4d" ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
+    sed -i '' -e '4d' ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
 else
     sed -i "4d" ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
 fi
