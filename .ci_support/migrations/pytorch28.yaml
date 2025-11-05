@@ -4,7 +4,8 @@ __migrator:
   kind: version
   migration_number: 1
   bump_number: 1
-libtorch:
-- '2.8'
-pytorch:
-- '2.8'
+# TF 2.19 is not ready for not linux64
+libtorch:  # [linux64]
+- '2.8'    # [linux64]
+pytorch:   # [linux64]
+- '2.8'    # [linux64]
