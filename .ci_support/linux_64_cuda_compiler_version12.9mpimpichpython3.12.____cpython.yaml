@@ -13,7 +13,7 @@ channel_targets:
 cuda_compiler:
 - cuda-nvcc
 cuda_compiler_version:
-- None
+- '12.9'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -36,11 +36,11 @@ pin_run_as_build:
 python:
 - 3.12.* *_cpython
 pytorch:
-- '2.6'
+- '2.7'
 target_platform:
 - linux-64
 tensorflow:
-- '2.18'
+- '2.19'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version

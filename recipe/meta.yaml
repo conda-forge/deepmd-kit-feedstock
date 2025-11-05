@@ -12,12 +12,14 @@ package:
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: f68f08db7c48479c0fc1f16b4dfd2e62c5dadcc229143ebd81bb802b6605d3bb
+    patches:
+      - 0001-fix-cmake-improve-CUDA-C-standard-setting-for-compat.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
