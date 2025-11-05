@@ -6,8 +6,8 @@ __migrator:
   bump_number: 1
 # TF 2.19 is not ready for not linux64
 libtorch:
-- '2.8'    # [linux64]
-- '2.6'    # [not linux64]
+- '2.8'    # [(linux and x86_64)]
+- '2.6'    # [(linux and aarch64) or osx]
 pytorch:
-- '2.8'    # [linux64]
-- '2.6'    # [not linux64]
+- '2.8'    # [(linux and x86_64)]
+- '2.6'    # [(linux and aarch64) or osx]
