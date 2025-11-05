@@ -1,0 +1,13 @@
+migrator_ts: 1759338402
+__migrator:
+  commit_message: Rebuild for pytorch 2.8
+  kind: version
+  migration_number: 1
+  bump_number: 1
+# TF 2.19 is not ready for not linux64
+libtorch:
+- '2.8'    # [(linux and x86_64)]
+- '2.6'    # [(linux and aarch64) or osx]
+pytorch:
+- '2.8'    # [(linux and x86_64)]
+- '2.6'    # [(linux and aarch64) or osx]
