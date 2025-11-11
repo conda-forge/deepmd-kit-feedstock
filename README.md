@@ -31,213 +31,73 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_cuda_compiler_version12.9mpimpichpython3.10.____cpython</td>
+              <td>linux_64_cuda_compiler_version12.9is_python_mintruempimpichpython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpimpichpython3.10.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9is_python_mintruempimpichpython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_version12.9mpimpichpython3.11.____cpython</td>
+              <td>linux_64_cuda_compiler_version12.9is_python_mintruempiopenmpipython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpimpichpython3.11.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9is_python_mintruempiopenmpipython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_version12.9mpimpichpython3.12.____cpython</td>
+              <td>linux_64_cuda_compiler_versionNoneis_python_mintruempimpichpython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpimpichpython3.12.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNoneis_python_mintruempimpichpython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_version12.9mpiopenmpipython3.10.____cpython</td>
+              <td>linux_64_cuda_compiler_versionNoneis_python_mintruempiopenmpipython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpiopenmpipython3.10.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNoneis_python_mintruempiopenmpipython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_version12.9mpiopenmpipython3.11.____cpython</td>
+              <td>linux_aarch64_cuda_compiler_versionNoneis_python_mintruempimpichpython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpiopenmpipython3.11.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNoneis_python_mintruempimpichpython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_version12.9mpiopenmpipython3.12.____cpython</td>
+              <td>linux_aarch64_cuda_compiler_versionNoneis_python_mintruempiopenmpipython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_version12.9mpiopenmpipython3.12.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNoneis_python_mintruempiopenmpipython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempimpichpython3.10.____cpython</td>
+              <td>osx_64_is_python_mintruempimpichpython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempimpichpython3.10.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_is_python_mintruempimpichpython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempimpichpython3.11.____cpython</td>
+              <td>osx_64_is_python_mintruempiopenmpipython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempimpichpython3.11.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_is_python_mintruempiopenmpipython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempimpichpython3.12.____cpython</td>
+              <td>osx_arm64_is_python_mintruempimpichpython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempimpichpython3.12.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_is_python_mintruempimpichpython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempiopenmpipython3.10.____cpython</td>
+              <td>osx_arm64_is_python_mintruempiopenmpipython3.10.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempiopenmpipython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempiopenmpipython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempiopenmpipython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_cuda_compiler_versionNonempiopenmpipython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_cuda_compiler_versionNonempiopenmpipython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempimpichpython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempimpichpython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempimpichpython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempimpichpython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempimpichpython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempimpichpython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_cuda_compiler_versionNonempiopenmpipython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpimpichpython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpimpichpython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpimpichpython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpimpichpython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpimpichpython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpimpichpython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpiopenmpipython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpipython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpiopenmpipython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpipython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_mpiopenmpipython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpipython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpimpichpython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpichpython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpimpichpython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpichpython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpimpichpython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpichpython3.12.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpiopenmpipython3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpipython3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpiopenmpipython3.11.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpipython3.11.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpiopenmpipython3.12.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=7846&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpipython3.12.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/deepmd-kit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_is_python_mintruempiopenmpipython3.10.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
