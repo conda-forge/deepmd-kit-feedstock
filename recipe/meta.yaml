@@ -19,7 +19,7 @@ source:
     folder: lammps
 
 build:
-  number: 2
+  number: 3
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -31,6 +31,8 @@ build:
   skip: true  # [cuda_compiler_version in ("11.8",)]
   skip: true  # [py==313]
   skip: true  # [aarch64 and cuda_compiler_version != "None"]
+  skip: true  # [is_abi3 and not is_python_min]
+  python_version_independent: true   # [is_abi3]
 
 requirements:
   build:
@@ -46,6 +48,7 @@ requirements:
     - {{ mpi }}  # [build_platform != target_platform and mpi == "openmpi"]
 
   host:
+    - python-abi3  # [is_abi3]
     - python
     - pip
     - scikit-build-core
