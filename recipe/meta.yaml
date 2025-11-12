@@ -5,6 +5,12 @@
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
 {% set proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
+{% if mpi != 'nompi' %}
+{% set mpi_prefix = "mpi_" + mpi %}
+{% else %}
+{% set mpi_prefix = "nompi" %}
+{% endif %}
+
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -20,11 +26,6 @@ source:
 
 build:
   number: 3
-  {% if mpi != 'nompi' %}
-  {% set mpi_prefix = "mpi_" + mpi %}
-  {% else %}
-  {% set mpi_prefix = "nompi" %}
-  {% endif %}
   string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
