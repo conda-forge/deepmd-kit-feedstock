@@ -126,8 +126,6 @@ outputs:
       string: cpu_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         - libdeepmd >={{ version }}
-      ignore_run_exports_from:
-        - libtensorflow
     script: build_cc.sh
     requirements:
       build:
@@ -141,10 +139,8 @@ outputs:
         - {{ mpi }}  # [build_platform != target_platform and mpi == "openmpi"]
 
       host:
-        - libtensorflow_cc
-        - libtensorflow_cc * {{ proc_type }}*
-        # need the header file
-        - libtensorflow
+        - tensorflow
+        - tensorflow * {{ proc_type }}*
         - libtorch
         - libtorch * {{ proc_type }}*
         - {{ mpi }}
@@ -158,8 +154,8 @@ outputs:
         - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
 
       run:
-        - libtensorflow_cc
-        - libtensorflow_cc * {{ proc_type }}*
+        - tensorflow
+        - tensorflow * {{ proc_type }}*
         - libtorch
         - libtorch * {{ proc_type }}*
         - {{ mpi }}
