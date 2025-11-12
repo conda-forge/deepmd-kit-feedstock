@@ -114,6 +114,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-deepmd--kit-green.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libdeepmd-green.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) |
 
 Installing deepmd-kit
 =====================
@@ -125,16 +126,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `deepmd-kit` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `deepmd-kit, libdeepmd` can be installed with `conda`:
 
 ```
-conda install deepmd-kit
+conda install deepmd-kit libdeepmd
 ```
 
 or with `mamba`:
 
 ```
-mamba install deepmd-kit
+mamba install deepmd-kit libdeepmd
 ```
 
 It is possible to list all of the versions of `deepmd-kit` available on your platform with `conda`:

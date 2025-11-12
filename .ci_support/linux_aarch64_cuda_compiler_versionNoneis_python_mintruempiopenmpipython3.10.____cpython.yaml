@@ -22,6 +22,12 @@ is_abi3:
 - true
 is_python_min:
 - true
+libtensorflow:
+- '2.18'
+libtensorflow_cc:
+- '2.18'
+libtorch:
+- '2.7'
 mpi:
 - openmpi
 mpich:

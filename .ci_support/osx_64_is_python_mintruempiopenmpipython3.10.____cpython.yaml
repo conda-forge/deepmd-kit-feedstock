@@ -24,6 +24,12 @@ is_abi3:
 - true
 is_python_min:
 - true
+libtensorflow:
+- '2.18'
+libtensorflow_cc:
+- '2.18'
+libtorch:
+- '2.7'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mpi:
