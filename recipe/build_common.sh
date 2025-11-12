@@ -33,7 +33,12 @@ if [ "$(uname)" == "Darwin" ]; then
     # sed -i '' -e '4d' ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
 	echo pass
 else
-    sed -i "4d" ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
+    if [ -f ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake ]; then
+        sed -i "4d" ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
+    fi
+    if [ -f ${PREFIX}/share/cmake/Caffe2/public/protobuf.cmake ]; then
+        sed -i "4d" ${PREFIX}/share/cmake/Caffe2/public/protobuf.cmake
+    fi
 fi
 # -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
 export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
