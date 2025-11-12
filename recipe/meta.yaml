@@ -126,6 +126,8 @@ outputs:
       string: cpu_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         - libdeepmd >={{ version }}
+      ignore_run_exports_from:
+        - libtensorflow
     script: build_cc.sh
     requirements:
       build:
@@ -141,6 +143,8 @@ outputs:
       host:
         - libtensorflow_cc
         - libtensorflow_cc * {{ proc_type }}*
+        # need the header file
+        - libtensorflow
         - libtorch
         - libtorch * {{ proc_type }}*
         - {{ mpi }}
