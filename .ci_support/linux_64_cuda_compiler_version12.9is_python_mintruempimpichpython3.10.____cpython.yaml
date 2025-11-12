@@ -24,10 +24,6 @@ is_abi3:
 - true
 is_python_min:
 - true
-libtensorflow:
-- '2.19'
-libtensorflow_cc:
-- '2.19'
 libtorch:
 - '2.7'
 mpi:
