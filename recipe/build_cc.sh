@@ -1,13 +1,13 @@
 set -evx
 
-export TENSORFLOW_ROOT=${PREFIX}
+export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
 source $RECIPE_DIR/build_common.sh
 
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
 
-cmake -D USE_TF_PYTHON_LIBS=FALSE \
+cmake -D USE_TF_PYTHON_LIBS=TRUE \
       -D USE_PT_PYTHON_LIBS=FALSE \
       -D ENABLE_TENSORFLOW=TRUE \
       -D ENABLE_PYTORCH=TRUE \
