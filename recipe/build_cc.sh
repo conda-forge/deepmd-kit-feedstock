@@ -1,8 +1,6 @@
 set -evx
 
-if [[ "${target_platform}" == "osx-arm64" || "${target_platform}" == "linux-aarch64" ]]; then
-    export TENSORFLOW_ROOT=${PREFIX}
-fi
+export TENSORFLOW_ROOT=${PREFIX}
 source $RECIPE_DIR/build_common.sh
 
 mkdir $SRC_DIR/source/build

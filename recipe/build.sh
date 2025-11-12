@@ -1,8 +1,6 @@
 set -evx
 
-if [[ "${target_platform}" == "osx-arm64" || "${target_platform}" == "linux-aarch64" ]]; then
-    export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
-fi
+export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
 source $RECIPE_DIR/build_common.sh
 
 DP_VARIANT=${DP_VARIANT} \
