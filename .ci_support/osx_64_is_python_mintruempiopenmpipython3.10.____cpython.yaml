@@ -20,10 +20,16 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '19'
+is_abi3:
+- true
+is_python_min:
+- true
+libtorch:
+- '2.7'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 mpi:
-- mpich
+- openmpi
 mpich:
 - '4'
 openmpi:
@@ -36,7 +42,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.10.* *_cpython
 pytorch:
 - '2.6'
 target_platform:
@@ -46,3 +52,5 @@ tensorflow:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - python
+  - is_python_min
