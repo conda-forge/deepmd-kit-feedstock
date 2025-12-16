@@ -69,7 +69,8 @@ requirements:
     - python
     - tensorflow
     - tensorflow * {{ proc_type }}*
-    - pytorch
+    - pytorch  # [linux64]
+    - pytorch 2.6.*  # [not linux64]
     - pytorch * {{ proc_type }}*
     - numpy >=1.21
     - scipy
