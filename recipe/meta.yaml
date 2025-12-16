@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.1.1" %}
+{% set version = "3.1.2" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,15 +11,13 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: f68f08db7c48479c0fc1f16b4dfd2e62c5dadcc229143ebd81bb802b6605d3bb
-    patches:
-      - 0001-fix-cmake-improve-CUDA-C-standard-setting-for-compat.patch
+    sha256: 8042a4939c5c0eba4f1c8adc530a83343630c42f9e268dff372c03ae0ec3f1f2
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
 
 build:
-  number: 3
+  number: 1
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -56,6 +54,7 @@ requirements:
     - pytorch * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
+    - {{ mpi }} * h*
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
@@ -64,6 +63,8 @@ requirements:
     - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
+    - dependency-groups
+    - tomli
 
   run:
     - python
@@ -101,6 +102,8 @@ test:
   requires:
     - pip
     - lammps  # [not aarch64]
+    # prevent external MPI
+    - {{ mpi }} * h*
   commands:
     # https://github.com/conda-forge/mendeleev-feedstock/issues/37
     - pip check  # [py<312]
