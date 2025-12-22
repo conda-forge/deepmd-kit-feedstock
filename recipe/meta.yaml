@@ -17,7 +17,7 @@ source:
     folder: lammps
 
 build:
-  number: 0
+  number: 1
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -54,7 +54,6 @@ requirements:
     - pytorch * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
-    - {{ mpi }} * h*
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
@@ -70,7 +69,8 @@ requirements:
     - python
     - tensorflow
     - tensorflow * {{ proc_type }}*
-    - pytorch
+    - pytorch  # [linux64]
+    - pytorch 2.6.*  # [not linux64]
     - pytorch * {{ proc_type }}*
     - numpy >=1.21
     - scipy
@@ -101,8 +101,6 @@ test:
   requires:
     - pip
     - lammps  # [not aarch64]
-    # prevent external MPI
-    - {{ mpi }} * h*
   commands:
     # https://github.com/conda-forge/mendeleev-feedstock/issues/37
     - pip check  # [py<312]
