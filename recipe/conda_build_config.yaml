@@ -10,5 +10,5 @@ tensorflow:
 - '2.19'  # [linux64]
 - '2.18'  # [not linux64]
 pytorch:
-- '2.8'  # [linux64]
+- '2.9'  # [linux64]
 - '2.6'  # [not linux64]
