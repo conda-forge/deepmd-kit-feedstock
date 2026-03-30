@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.1.3" %}
+{% set version = "3.1.3.0328_seq_update" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -10,8 +10,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: 4387128aab98d9819b3484957a8857030f805cbab90c035c509ea87a72b182fa
+  - url: https://github.com/iProzd/deepmd-kit/archive/c4ed1f906d2c758aa77f5e2e518b613dcd8d429c.tar.gz
+    sha256: 4f94efc095fc84f6e76e95e393a675e75fb8bf647c27a1b7ed780edd3a4999bb
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
@@ -27,6 +27,8 @@ build:
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("11.8",)]
+  skip: true  # [osx]
+  skip: true  # [py<312]
   skip: true  # [py==313]
   skip: true  # [aarch64 and cuda_compiler_version != "None"]
 
