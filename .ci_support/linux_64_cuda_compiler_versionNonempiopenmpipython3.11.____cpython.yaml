@@ -20,6 +20,8 @@ cxx_compiler_version:
 - '14'
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma9
+libabseil:
+- '20260107'
 mpi:
 - openmpi
 mpich:
