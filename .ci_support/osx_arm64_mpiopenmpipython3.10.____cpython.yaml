@@ -20,6 +20,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '19'
+libabseil:
+- '20260107'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:
@@ -38,11 +40,11 @@ pin_run_as_build:
 python:
 - 3.10.* *_cpython
 pytorch:
-- '2.6'
+- '2.10'
 target_platform:
 - osx-arm64
 tensorflow:
-- '2.18'
+- '2.19'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
