@@ -33,7 +33,7 @@ fi
 # TF and PT find protobuf conflict
 perl -ni -e 'print unless /find_package\(Protobuf/' ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
 # -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
-export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
+export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash -labsl_raw_hash_set ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
