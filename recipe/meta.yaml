@@ -85,6 +85,8 @@ requirements:
     - ml_dtypes
     - mendeleev
     - array-api-compat
+    - python-vesin
+    - e3nn
     - python-lmdb
     - msgpack-python
 
