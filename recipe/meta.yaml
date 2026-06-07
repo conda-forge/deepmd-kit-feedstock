@@ -1,5 +1,5 @@
 {% set name = "deepmd-kit" %}
-{% set version = "3.1.0rc0" %}
+{% set version = "3.2.0b0" %}
 {% set lammps_version = "stable_29Aug2024" %}
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
@@ -11,7 +11,7 @@ package:
 
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: d1140ea2430675e67da1148838c378695d820c97da521af3820448f7d39f6945
+    sha256: f71ffb904077717bd0bb0169e504b6599d1c8f34f1bef290a366e6dd377d4558
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 6112e0cc352c3140a4874c7f74db3c0c8e30134024164509ecf3772b305fde2e
     folder: lammps
@@ -27,6 +27,10 @@ build:
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("11.8",)]
+  skip: true  # [py==313]
+  skip: true  # [aarch64 and cuda_compiler_version != "None"]
+  skip: true  # [aarch64]
+  skip: true  # [osx and x86_64]
 
 requirements:
   build:
@@ -60,6 +64,9 @@ requirements:
     - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
+    - dependency-groups
+    - libabseil
+    - tomli
 
   run:
     - python
@@ -78,6 +85,8 @@ requirements:
     - ml_dtypes
     - mendeleev
     - array-api-compat
+    - python-lmdb
+    - msgpack-python
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
@@ -95,10 +104,11 @@ test:
     - deepmd.pt
   requires:
     - pip
-    - lammps
+    - lammps  # [not aarch64]
   commands:
     # https://github.com/conda-forge/mendeleev-feedstock/issues/37
-    - pip check  # [py<312]
+    # Temporarily disabled due to TensorFlow 2.19 clobbering in the Linux test env.
+    # - pip check  # [py<312]
     - dp -h
     - dp train -h
     - dp freeze -h
@@ -107,7 +117,7 @@ test:
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
     - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
-    - mpiexec -n 1 lmp_mpi -in in.lammps
+    - mpiexec -n 1 lmp_mpi -in in.lammps  # [not aarch64]
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
