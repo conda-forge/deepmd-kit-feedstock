@@ -8,5 +8,6 @@ pin_run_as_build:
 
 channel_targets:
 - conda-forge deepmd-kit_rc
+
 tensorflow:
-- '2.18'
+- '2.19'

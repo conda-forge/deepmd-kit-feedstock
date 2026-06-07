@@ -6,7 +6,7 @@ if [[ ${cuda_compiler_version} == 11.2 ]]; then
 elif [[ ${cuda_compiler_version} == 11.8 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"
 elif [[ ${cuda_compiler_version} == 12.* ]]; then
-    export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0+PTX"
+    export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0;10.0;12.0+PTX"
 elif [[ ${cuda_compiler_version} != "None" ]]; then
     echo "unsupported cuda version."
     exit 1
@@ -21,15 +21,19 @@ else
 fi
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_OSX_ARCHITECTURES="arm64"
-    export CMAKE_ARGS="${CMAKE_ARGS} -D CPP_CXX_ABI_RUN_RESULT_VAR=0 -D CPP_CXX_ABI_RUN_RESULT_VAR__TRYRUN_OUTPUT=0 -D PY_CXX_ABI_RESULT_VAR=0 -D PY_CXX_ABI_RESULT_VAR__TRYRUN_OUTPUT=0 -D PY_CXX_ABI_RUN_RESULT_VAR=0 -D PY_CXX_ABI_RUN_RESULT_VAR__TRYRUN_OUTPUT=0 -D TENSORFLOW_VERSION_RUN_RESULT_VAR=0 -D TENSORFLOW_VERSION_RUN_RESULT_VAR__TRYRUN_OUTPUT=2.17"
+fi
+if [[ "${target_platform}" == "osx-arm64" || "${target_platform}" == "linux-aarch64" ]]; then
+    export CMAKE_ARGS="${CMAKE_ARGS} -D CPP_CXX_ABI_RUN_RESULT_VAR=0 -D CPP_CXX_ABI_RUN_RESULT_VAR__TRYRUN_OUTPUT=0 -D PY_CXX_ABI_RESULT_VAR=0 -D PY_CXX_ABI_RESULT_VAR__TRYRUN_OUTPUT=0 -D PY_CXX_ABI_RUN_RESULT_VAR=0 -D PY_CXX_ABI_RUN_RESULT_VAR__TRYRUN_OUTPUT=0 -D TENSORFLOW_VERSION_RUN_RESULT_VAR=0 -D TENSORFLOW_VERSION_RUN_RESULT_VAR__TRYRUN_OUTPUT=2.18 -D TENSORFLOW_VERSION_RUN_RESULT_VAR__TRYRUN_OUTPUT_STDOUT=2.18 -D TENSORFLOW_VERSION_RUN_RESULT_VAR__TRYRUN_OUTPUT_STDERR=''"
     export TENSORFLOW_ROOT=${SP_DIR}/tensorflow
     export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_ROOT=${TENSORFLOW_ROOT}"
 fi
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
   export OPAL_PREFIX="$PREFIX"
 fi
+# TF and PT find protobuf conflict
+perl -ni -e 'print unless /find_package\(Protobuf/' ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
 # -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
-export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash ${LDFLAGS}"
+export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash -labsl_raw_hash_set ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
