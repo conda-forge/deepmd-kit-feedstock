@@ -17,7 +17,7 @@ source:
     folder: lammps
 
 build:
-  number: 3
+  number: 4
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
