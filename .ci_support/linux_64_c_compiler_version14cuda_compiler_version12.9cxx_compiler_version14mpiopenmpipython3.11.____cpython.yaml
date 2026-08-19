@@ -21,9 +21,9 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-x86_64:alma10
 libabseil:
-- '20260107'
+- '20260526'
 mpi:
-- mpich
+- openmpi
 mpich:
 - '4'
 openmpi:
@@ -36,7 +36,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 pytorch:
 - '2.12'
 target_platform:
