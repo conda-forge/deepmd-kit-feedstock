@@ -38,10 +38,18 @@ DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
+# The standalone libtorch CMake config expects its Protobuf imported target to
+# exist already.  TensorFlow can find the headers without creating that target,
+# so initialize Protobuf explicitly before Torch is discovered.
+perl -0pi -e 's/  find_package\(Torch REQUIRED\)/  find_package(Protobuf REQUIRED)\n  find_package(Torch REQUIRED)/' \
+    $SRC_DIR/source/CMakeLists.txt
 
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
+# libtensorflow_cc installs its vendored Eigen tree below tensorflow/third_party
+# rather than at the include root expected by TensorFlow's public headers.
+export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include/tensorflow/third_party"
 
 cmake ${CMAKE_ARGS} \
       -D USE_TF_PYTHON_LIBS=FALSE \

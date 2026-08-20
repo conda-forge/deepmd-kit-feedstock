@@ -197,8 +197,7 @@ outputs:
         - python {{ python_min }}  # [mpi == "mpich"]
         - python 3.12  # [mpi == "openmpi"]
       commands:
-        # https://github.com/conda-forge/mendeleev-feedstock/issues/37
-        - pip check  # [mpi == "mpich"]
+        - pip check
         - dp -h
         - dp train -h
         - dp freeze -h
