@@ -43,14 +43,16 @@ mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
 
-cmake -D USE_TF_PYTHON_LIBS=TRUE \
+cmake ${CMAKE_ARGS} \
+      -D USE_TF_PYTHON_LIBS=FALSE \
+      -D USE_PT_PYTHON_LIBS=FALSE \
       -D ENABLE_TENSORFLOW=TRUE \
       -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
-      -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
-	  ${CMAKE_ARGS} \
+	  -D TENSORFLOW_ROOT=${PREFIX} \
+	  -D CMAKE_PREFIX_PATH=${PREFIX} \
 	  $SRC_DIR/source
 make VERBOSE=1 #-j${CPU_COUNT}
 make install

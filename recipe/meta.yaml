@@ -4,9 +4,17 @@
 {% set lammps_date = datetime.datetime.strptime(lammps_version.split('_')[1], "%d%b%Y") %}
 {% set lammps_conda_version = "{:%Y.%m.%d}".format(lammps_date) %}
 {% set proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
+{% if mpi != 'nompi' %}
+{% set mpi_prefix = "mpi_" + mpi %}
+{% else %}
+{% set mpi_prefix = "nompi" %}
+{% endif %}
 
 package:
-  name: {{ name|lower }}
+  # Build the native package at the top level, then split the Python install
+  # into an abi3 output.  This keeps dp_ipi out of the Python-version-
+  # independent package while compiling the source tree only once.
+  name: libdeepmd
   version: {{ version }}
 
 source:
@@ -17,20 +25,28 @@ source:
     folder: lammps
 
 build:
-  number: 0
-  {% if mpi != 'nompi' %}
-  {% set mpi_prefix = "mpi_" + mpi %}
-  {% else %}
-  {% set mpi_prefix = "nompi" %}
-  {% endif %}
-  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+  number: 1
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  string: cpu_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+  run_exports:
+    # Consumers compile against the C++ API; constrain them to the current
+    # minor series because DeePMD-kit does not promise a stable C++ ABI.
+    - {{ pin_subpackage("libdeepmd", max_pin="x.x") }}
   skip: true  # [win]
   skip: true  # [cuda_compiler_version in ("11.8",)]
   skip: true  # [py==313]
   skip: true  # [aarch64 and cuda_compiler_version != "None"]
   skip: true  # [aarch64]
   skip: true  # [osx and x86_64]
+  # All outputs are produced by the python_min build.  deepmd-kit's wheel is
+  # tagged abi3 upstream, so later CPython versions reuse this one build.
+  skip: true  # [is_abi3 and not is_python_min]
+  ignore_run_exports_from:
+    # These Python packages are needed to compile the abi3 output, but the
+    # native libdeepmd output links their C++ runtime subpackages instead.
+    - python
+    - tensorflow
+    - pytorch
 
 requirements:
   build:
@@ -52,8 +68,12 @@ requirements:
     - hatch-fancy-pypi-readme
     - tensorflow
     - tensorflow * {{ proc_type }}*
+    - libtensorflow_cc
+    - libtensorflow_cc * {{ proc_type }}*
     - pytorch
     - pytorch * {{ proc_type }}*
+    - libtorch
+    - libtorch * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
@@ -72,57 +92,123 @@ requirements:
     - tomli
 
   run:
-    - python
-    - tensorflow
-    - tensorflow * {{ proc_type }}*
-    - pytorch
-    - pytorch * {{ proc_type }}*
-    - numpy >=1.21
-    - scipy
-    - dargs >=0.4.7
-    - pyyaml
+    - libtensorflow_cc
+    - libtensorflow_cc * {{ proc_type }}*
+    - libtorch
+    - libtorch * {{ proc_type }}*
     - {{ mpi }}
-    - h5py
-    - wcmatch
-    - packaging
-    - ml_dtypes
-    - mendeleev
-    - array-api-compat
-    - python-vesin
-    - e3nn
-    - python-lmdb
-    - msgpack-python
-    - einops
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
 
 test:
-  files:
-    - water_se_a.json
-    - water.lmp
-    - in.lammps
-  source_files:
-    - examples/water/data
-  imports:
-    - deepmd
-    - deepmd.tf
-    - deepmd.pt
-  requires:
-    - pip
-    - lammps  # [not aarch64]
   commands:
-    # https://github.com/conda-forge/mendeleev-feedstock/issues/37
-    - pip check  # [py<312]
-    - dp -h
-    - dp train -h
-    - dp freeze -h
-    - dp test -h
-    - mv examples/water/data/data_0 ./data
-    - dp train water_se_a.json
-    - dp freeze -o frozen_model.pb
-    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
-    - mpiexec -n 1 lmp_mpi -in in.lammps  # [not aarch64]
+    - test -x "${PREFIX}/bin/dp_ipi"
+    - test -f "${PREFIX}/include/deepmd/DeepPot.h"
+    - test -d "${PREFIX}/lib/cmake/DeePMD"
+    - dp_ipi
+
+outputs:
+  - name: libdeepmd
+    files:
+      include:
+        - '**'
+      exclude:
+        # The Python files and console scripts belong exclusively to the
+        # python_version_independent deepmd-kit output below.
+        - lib/python*/site-packages/deepmd/*
+        - lib/python*/site-packages/deepmd/**/*
+        - lib/python*/site-packages/dpa_adapt/*
+        - lib/python*/site-packages/dpa_adapt/**/*
+        - lib/python*/site-packages/deepmd_kit-*.dist-info/*
+        - lib/python*/site-packages/deepmd_kit-*.dist-info/**/*
+        - bin/dp
+        - bin/dpa-adapt
+        - bin/dpaad
+
+  - name: {{ name|lower }}
+    build:
+      python_version_independent: true  # [is_abi3]
+      string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+      string: cpu_h{{ PKG_HASH }}_{{ mpi_prefix }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+      # Avoid running the cross-compiled host interpreter just to create pyc
+      # files; conda regenerates them for the interpreter in the target env.
+      skip_compile_pyc:
+        - "*.py"
+    files:
+      include:
+        - lib/python*/site-packages/deepmd/*
+        - lib/python*/site-packages/deepmd/**/*
+        - lib/python*/site-packages/dpa_adapt/*
+        - lib/python*/site-packages/dpa_adapt/**/*
+        - lib/python*/site-packages/deepmd_kit-*.dist-info/*
+        - lib/python*/site-packages/deepmd_kit-*.dist-info/**/*
+        - bin/dp
+        - bin/dpa-adapt
+        - bin/dpaad
+    requirements:
+      host:
+        - python
+        - python-abi3  # [is_abi3]
+        - tensorflow
+        - tensorflow * {{ proc_type }}*
+        - pytorch
+        - pytorch * {{ proc_type }}*
+        - {{ mpi }}
+      run:
+        - python >={{ python_min }}
+        - tensorflow
+        - tensorflow * {{ proc_type }}*
+        - pytorch
+        - pytorch * {{ proc_type }}*
+        - numpy >=1.21
+        - scipy
+        - dargs >=0.4.7
+        - pyyaml
+        - {{ mpi }}
+        - h5py
+        - wcmatch
+        - packaging
+        - ml_dtypes
+        - mendeleev
+        - array-api-compat
+        - python-vesin
+        - e3nn
+        - python-lmdb
+        - msgpack-python
+        - einops
+        - {{ pin_subpackage("libdeepmd", exact=True) }}
+    test:
+      files:
+        - water_se_a.json
+        - water.lmp
+        - in.lammps
+      source_files:
+        - examples/water/data
+      imports:
+        - deepmd
+        - deepmd.tf
+        - deepmd.pt
+      requires:
+        - pip
+        - lammps  # [not aarch64]
+        # Exercise both the build interpreter and a later CPython without
+        # adding jobs to the matrix.
+        - python {{ python_min }}  # [mpi == "mpich"]
+        - python 3.12  # [mpi == "openmpi"]
+      commands:
+        # https://github.com/conda-forge/mendeleev-feedstock/issues/37
+        - pip check  # [mpi == "mpich"]
+        - dp -h
+        - dp train -h
+        - dp freeze -h
+        - dp test -h
+        - dp_ipi
+        - mv examples/water/data/data_0 ./data
+        - dp train water_se_a.json
+        - dp freeze -o frozen_model.pb
+        - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
+        - mpiexec -n 1 lmp_mpi -in in.lammps  # [not aarch64]
 
 about:
   home: https://github.com/deepmodeling/deepmd-kit
@@ -134,5 +220,6 @@ about:
   dev_url: https://github.com/deepmodeling/deepmd-kit
 
 extra:
+  feedstock-name: {{ name|lower }}
   recipe-maintainers:
     - njzjz
