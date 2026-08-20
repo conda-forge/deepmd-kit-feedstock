@@ -52,7 +52,7 @@ cmake -D USE_TF_PYTHON_LIBS=TRUE \
       -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
-make VERBOSE=1 #-j${CPU_COUNT}
+make -j${CPU_COUNT} VERBOSE=1
 make install
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
