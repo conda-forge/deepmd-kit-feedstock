@@ -85,6 +85,11 @@ requirements:
     - ml_dtypes
     - mendeleev
     - array-api-compat
+    - python-vesin
+    - e3nn
+    - python-lmdb
+    - msgpack-python
+    - einops
 
   run_constrained:
     - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
