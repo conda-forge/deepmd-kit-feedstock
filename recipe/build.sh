@@ -38,19 +38,29 @@ DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
+# The standalone libtorch CMake config expects its Protobuf imported target to
+# exist already.  TensorFlow can find the headers without creating that target,
+# so initialize Protobuf explicitly before Torch is discovered.
+perl -0pi -e 's/  find_package\(Torch REQUIRED\)/  find_package(Protobuf REQUIRED)\n  find_package(Torch REQUIRED)/' \
+    $SRC_DIR/source/CMakeLists.txt
 
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
+# libtensorflow_cc keeps its vendored Eigen and XLA trees below
+# tensorflow/third_party rather than at the roots expected by public headers.
+export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include/tensorflow/third_party -I${PREFIX}/include/tensorflow/third_party/xla"
 
-cmake -D USE_TF_PYTHON_LIBS=TRUE \
+cmake ${CMAKE_ARGS} \
+      -D USE_TF_PYTHON_LIBS=FALSE \
+      -D USE_PT_PYTHON_LIBS=FALSE \
       -D ENABLE_TENSORFLOW=TRUE \
       -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
 	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
-      -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
-	  ${CMAKE_ARGS} \
+	  -D TENSORFLOW_ROOT=${PREFIX} \
+	  -D CMAKE_PREFIX_PATH=${PREFIX} \
 	  $SRC_DIR/source
 make VERBOSE=1 #-j${CPU_COUNT}
 make install
