@@ -47,9 +47,9 @@ perl -0pi -e 's/  find_package\(Torch REQUIRED\)/  find_package(Protobuf REQUIRE
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
-# libtensorflow_cc installs its vendored Eigen tree below tensorflow/third_party
-# rather than at the include root expected by TensorFlow's public headers.
-export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include/tensorflow/third_party"
+# libtensorflow_cc keeps its vendored Eigen and XLA trees below
+# tensorflow/third_party rather than at the roots expected by public headers.
+export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include/tensorflow/third_party -I${PREFIX}/include/tensorflow/third_party/xla"
 
 cmake ${CMAKE_ARGS} \
       -D USE_TF_PYTHON_LIBS=FALSE \
