@@ -65,6 +65,8 @@ requirements:
     - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
     - libcusparse-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - libcusolver-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - libcudss-dev     # [(cuda_compiler_version or "").startswith("12")]
     - dependency-groups
     - libabseil
     - tomli
