@@ -15,9 +15,40 @@ fi
 if [[ ${cuda_compiler_version} != "None" ]]; then
     DEEPMD_USE_CUDA_TOOLKIT=TRUE
     DP_VARIANT=cuda
+
+    # deepmd/kk passes Kokkos device views owned by LAMMPS across the plugin
+    # boundary. Build against LAMMPS' vendored Kokkos release and the same
+    # logical architecture setting as lammps-feedstock to keep that ABI
+    # compatible. Native cubins avoid plugin-side driver JIT on known GPUs.
+    # Reuse the backend's maintained architecture list for native Kokkos
+    # cubins, retaining PTX only for the newest virtual architecture.
+    DEEPMD_KOKKOS_CUDA_ARCHITECTURES=${TORCH_CUDA_ARCH_LIST//./}
+    DEEPMD_KOKKOS_CUDA_ARCHITECTURES=${DEEPMD_KOKKOS_CUDA_ARCHITECTURES//+PTX/}
+    KOKKOS_INSTALL_PREFIX=${SRC_DIR}/kokkos-install
+    cmake -S ${SRC_DIR}/lammps/lib/kokkos \
+          -B ${SRC_DIR}/kokkos-build \
+          -G Ninja \
+          ${CMAKE_ARGS} \
+          -D CMAKE_BUILD_TYPE=Release \
+          -D CMAKE_INSTALL_PREFIX=${KOKKOS_INSTALL_PREFIX} \
+          -D CMAKE_INSTALL_LIBDIR=lib \
+          -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+          -D BUILD_SHARED_LIBS=OFF \
+          -D Kokkos_ENABLE_CUDA=ON \
+          -D Kokkos_ENABLE_CUDA_CONSTEXPR=ON \
+          -D Kokkos_ENABLE_SERIAL=ON \
+          -D Kokkos_ENABLE_OPENMP=OFF \
+          -D Kokkos_ENABLE_TESTS=OFF \
+          -D Kokkos_ENABLE_EXAMPLES=OFF \
+          -D "Kokkos_CUDA_FATBIN_ARCHITECTURES=${DEEPMD_KOKKOS_CUDA_ARCHITECTURES}" \
+          -D Kokkos_ARCH_MAXWELL50=ON
+    cmake --build ${SRC_DIR}/kokkos-build --parallel ${CPU_COUNT} --verbose
+    cmake --install ${SRC_DIR}/kokkos-build
+    DEEPMD_KOKKOS_ARGS="-DDEEPMD_LAMMPS_KOKKOS=ON -DKokkos_DIR=${KOKKOS_INSTALL_PREFIX}/lib/cmake/Kokkos"
 else
     DEEPMD_USE_CUDA_TOOLKIT=FALSE
     DP_VARIANT=cpu
+    DEEPMD_KOKKOS_ARGS="-DDEEPMD_LAMMPS_KOKKOS=OFF"
 fi
 # TensorFlow 2.21 no longer exports TF_Version from the framework library used
 # by Python extensions. The conda variant is authoritative and also works when
@@ -54,12 +85,40 @@ cmake -D USE_TF_PYTHON_LIBS=TRUE \
       -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
-	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
       -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make -j${CPU_COUNT} VERBOSE=1
 make install
+
+# Configure the plugin separately against the installed C API. A CUDA-enabled
+# Kokkos package installs a global nvcc compiler launcher; isolating it here
+# prevents the TensorFlow and PyTorch interface libraries above from being
+# unnecessarily rebuilt by nvcc.
+mkdir $SRC_DIR/source/plugin-build
+cd $SRC_DIR/source/plugin-build
+cmake -D BUILD_CPP_IF=TRUE \
+      -D BUILD_PY_IF=FALSE \
+      -D ENABLE_TENSORFLOW=FALSE \
+      -D ENABLE_PYTORCH=FALSE \
+      -D ALLOW_NO_BACKEND=TRUE \
+	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
+      -D DEEPMD_C_ROOT=${PREFIX} \
+      -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
+	  ${DEEPMD_KOKKOS_ARGS} \
+	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
+	  ${CMAKE_ARGS} \
+	  $SRC_DIR/source
+make -j${CPU_COUNT} VERBOSE=1
+# This imported-C-API configuration also generates CMake package files for the
+# already-installed DeePMD libraries. Stage its installation and copy only the
+# LAMMPS module so the primary build's development exports remain intact.
+PLUGIN_INSTALL_STAGE=${SRC_DIR}/plugin-install
+DESTDIR="${PLUGIN_INSTALL_STAGE}" make install
+cp -a "${PLUGIN_INSTALL_STAGE}${PREFIX}/lib"/libdeepmd_lmp.* "${PREFIX}/lib/"
+mkdir -p "${PREFIX}/lib/deepmd_lmp"
+cp -a "${PLUGIN_INSTALL_STAGE}${PREFIX}/lib/deepmd_lmp/." \
+      "${PREFIX}/lib/deepmd_lmp/"
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
