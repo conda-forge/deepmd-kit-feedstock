@@ -21,8 +21,9 @@ else
 fi
 # TensorFlow 2.21 no longer exports TF_Version from the framework library used
 # by Python extensions. The conda variant is authoritative and also works when
-# cross-compiling, where the target Python cannot be executed.
-export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_VERSION=${tensorflow}"
+# cross-compiling, where the target Python cannot be executed. DeepMD's version
+# parser requires a patch component before defining TF_*_VERSION for C++ code.
+export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_VERSION=${tensorflow}.0"
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_OSX_ARCHITECTURES="arm64"
 fi
