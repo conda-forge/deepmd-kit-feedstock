@@ -12,6 +12,8 @@ package:
 source:
   - url: https://github.com/deepmodeling/{{ name }}/archive/v{{ version }}.tar.gz
     sha256: 37a86e487c9d4fd3dff497cbbb3cdecc346b01a3381dc65545ffe5182aa5e030
+    patches:
+      - patches/0001-find-external-protobuf-for-tensorflow-2.21.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 9d1eb62c47b8bb1c2003dfe5b5e82b3ebef4223b51593f9aec2410c5ec983977
     folder: lammps

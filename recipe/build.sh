@@ -19,6 +19,10 @@ else
     DEEPMD_USE_CUDA_TOOLKIT=FALSE
     DP_VARIANT=cpu
 fi
+# TensorFlow 2.21 no longer exports TF_Version from the framework library used
+# by Python extensions. The conda variant is authoritative and also works when
+# cross-compiling, where the target Python cannot be executed.
+export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_VERSION=${tensorflow}"
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_OSX_ARCHITECTURES="arm64"
 fi
@@ -32,8 +36,9 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" && "${mpi}" == "openmpi" ]]; then
 fi
 # TF and PT find protobuf conflict
 perl -ni -e 'print unless /find_package\(Protobuf/' ${SP_DIR}/torch/share/cmake/Caffe2/public/protobuf.cmake
-# -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79
-export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_hash -labsl_raw_hash_set ${LDFLAGS}"
+# -labsl_log_flags is the workaround for https://github.com/conda-forge/abseil-cpp-feedstock/issues/79.
+# TensorFlow 2.21 headers also instantiate helpers provided by absl_strings.
+export LDFLAGS="-labsl_log_flags -labsl_status -labsl_log_internal_message -labsl_log_internal_check_op -labsl_hash -labsl_raw_hash_set -labsl_strings ${LDFLAGS}"
 DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
