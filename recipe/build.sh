@@ -117,8 +117,10 @@ PLUGIN_INSTALL_STAGE=${SRC_DIR}/plugin-install
 DESTDIR="${PLUGIN_INSTALL_STAGE}" make install
 cp -a "${PLUGIN_INSTALL_STAGE}${PREFIX}/lib"/libdeepmd_lmp.* "${PREFIX}/lib/"
 mkdir -p "${PREFIX}/lib/deepmd_lmp"
-cp -a "${PLUGIN_INSTALL_STAGE}${PREFIX}/lib/deepmd_lmp/." \
-      "${PREFIX}/lib/deepmd_lmp/"
+# DeepMD's install(CODE) writes this plugin symlink directly to the real
+# prefix instead of honoring DESTDIR. Recreate it explicitly after copying the
+# staged module so plugin discovery does not depend on that CMake behavior.
+ln -sfn ../libdeepmd_lmp.so "${PREFIX}/lib/deepmd_lmp/dpplugin.so"
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
 # This will allow them to be run on environment activation.
