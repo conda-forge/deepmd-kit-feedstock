@@ -14,12 +14,21 @@ source:
     sha256: 37a86e487c9d4fd3dff497cbbb3cdecc346b01a3381dc65545ffe5182aa5e030
     patches:
       - patches/0001-find-external-protobuf-for-tensorflow-2.21.patch
+      - patches/0002-support-lammps-2025-kokkos-api.patch
+      - patches/0004-register-lammps-kokkos-plugin-styles.patch
+      - patches/0005-share-lammps-kokkos-runtime.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 9d1eb62c47b8bb1c2003dfe5b5e82b3ebef4223b51593f9aec2410c5ec983977
     folder: lammps
+    patches:
+      - patches/0003-kokkos-build-cuda-fatbins.patch
 
 build:
-  number: 2
+  number: 3
+  # Kokkos calls the CUDA driver API directly. The real libcuda is supplied by
+  # the host NVIDIA driver rather than by a conda runtime package.
+  missing_dso_whitelist:
+    - "*/libcuda.so.1"  # [linux and cuda_compiler_version != "None"]
   {% if mpi != 'nompi' %}
   {% set mpi_prefix = "mpi_" + mpi %}
   {% else %}
@@ -59,6 +68,9 @@ requirements:
     - setuptools_scm
     - {{ mpi }}
     - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
+    # Kokkos' exported CMake package resolves the CUDA driver target while
+    # compiling the GPU-resident LAMMPS plugin.
+    - cuda-driver-dev  # [(cuda_compiler_version or "").startswith("12")]
     - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
     # require by pytorch
     - libcublas-dev    # [(cuda_compiler_version or "").startswith("12")]
@@ -97,7 +109,10 @@ requirements:
     - einops
 
   run_constrained:
-    - lammps {{ lammps_conda_version }} *_{{ mpi_prefix }}_*
+    # The Kokkos plugin shares LAMMPS' Kokkos ABI, so CUDA and CPU builds must
+    # resolve to the matching LAMMPS processor variant.
+    - lammps {{ lammps_conda_version }} cuda{{ cuda_compiler_version | replace('.', '') }}*_{{ mpi_prefix }}_*  # [cuda_compiler_version != "None"]
+    - lammps {{ lammps_conda_version }} cpu_*_{{ mpi_prefix }}_*  # [cuda_compiler_version == "None"]
 
 test:
   files:
@@ -112,7 +127,11 @@ test:
     - deepmd.pt
   requires:
     - pip
-    - lammps  # [not aarch64]
+    # GitHub's CUDA runners do not expose the NVIDIA driver library. Use its
+    # development stub only to validate plugin loading and CPU execution.
+    - cuda-driver-dev  # [linux and cuda_compiler_version != "None"]
+    - lammps {{ lammps_conda_version }} cuda{{ cuda_compiler_version | replace('.', '') }}*_{{ mpi_prefix }}_*  # [cuda_compiler_version != "None"]
+    - lammps {{ lammps_conda_version }} cpu_*_{{ mpi_prefix }}_*  # [cuda_compiler_version == "None" and not aarch64]
   commands:
     # https://github.com/conda-forge/mendeleev-feedstock/issues/37
     - pip check  # [py<312]
@@ -124,6 +143,18 @@ test:
     - dp train water_se_a.json
     - dp freeze -o frozen_model.pb
     - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes OMPI_MCA_plm_ssh_agent=false  # [mpi == "openmpi"]
+    # Preloading the stub satisfies libcuda.so.1 on driverless CI runners. A
+    # real NVIDIA driver supplies the same SONAME in normal GPU environments.
+    - export LD_PRELOAD="$PREFIX/lib/stubs/libcuda.so"  # [linux and cuda_compiler_version != "None"]
+    # Query LAMMPS' runtime plugin and style registries. The static `-h`
+    # listing only contains styles compiled into LAMMPS itself.
+    - printf 'plugin list\ninfo styles pair\n' | lmp_mpi -log none -echo none -in /dev/stdin > lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "deepmd/kk" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "dpa4spin/kk" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin deepmd/kk/device" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin deepmd/kk/host" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin dpa4spin/kk/device" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin dpa4spin/kk/host" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
     - mpiexec -n 1 lmp_mpi -in in.lammps  # [not aarch64]
 
 about:
