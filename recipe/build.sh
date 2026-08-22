@@ -1,12 +1,19 @@
 set -evx
 
-# for libtorch
+# PyTorch extensions use toolkit-specific architecture spellings. CUDA 13
+# dropped pre-Turing targets, so its list must not inherit CUDA 12 entries.
 if [[ ${cuda_compiler_version} == 11.2 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
+    DEEPMD_KOKKOS_ARCH=MAXWELL50
 elif [[ ${cuda_compiler_version} == 11.8 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"
+    DEEPMD_KOKKOS_ARCH=MAXWELL50
 elif [[ ${cuda_compiler_version} == 12.* ]]; then
     export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0;10.0;12.0+PTX"
+    DEEPMD_KOKKOS_ARCH=MAXWELL50
+elif [[ ${cuda_compiler_version} == 13.* ]]; then
+    export TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0;10.0;11.0;12.0+PTX"
+    DEEPMD_KOKKOS_ARCH=TURING75
 elif [[ ${cuda_compiler_version} != "None" ]]; then
     echo "unsupported cuda version."
     exit 1
@@ -20,10 +27,15 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     # boundary. Build against LAMMPS' vendored Kokkos release and the same
     # logical architecture setting as lammps-feedstock to keep that ABI
     # compatible. Native cubins avoid plugin-side driver JIT on known GPUs.
-    # Reuse the backend's maintained architecture list for native Kokkos
-    # cubins, retaining PTX only for the newest virtual architecture.
-    DEEPMD_KOKKOS_CUDA_ARCHITECTURES=${TORCH_CUDA_ARCH_LIST//./}
-    DEEPMD_KOKKOS_CUDA_ARCHITECTURES=${DEEPMD_KOKKOS_CUDA_ARCHITECTURES//+PTX/}
+    # The nvcc activation script supplies the exact real and virtual targets
+    # supported by each toolkit, including CUDA 13 suffixes such as 100f.
+    # Pass that list through unchanged instead of deriving it from PyTorch's
+    # less expressive architecture syntax.
+    if [[ -z ${CUDAARCHS:-} ]]; then
+        echo "CUDAARCHS was not set by the CUDA compiler activation script."
+        exit 1
+    fi
+    DEEPMD_KOKKOS_CUDA_ARCHITECTURES=${CUDAARCHS}
     KOKKOS_INSTALL_PREFIX=${SRC_DIR}/kokkos-install
     cmake -S ${SRC_DIR}/lammps/lib/kokkos \
           -B ${SRC_DIR}/kokkos-build \
@@ -41,7 +53,7 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
           -D Kokkos_ENABLE_TESTS=OFF \
           -D Kokkos_ENABLE_EXAMPLES=OFF \
           -D "Kokkos_CUDA_FATBIN_ARCHITECTURES=${DEEPMD_KOKKOS_CUDA_ARCHITECTURES}" \
-          -D Kokkos_ARCH_MAXWELL50=ON
+          -D "Kokkos_ARCH_${DEEPMD_KOKKOS_ARCH}=ON"
     cmake --build ${SRC_DIR}/kokkos-build --parallel ${CPU_COUNT} --verbose
     cmake --install ${SRC_DIR}/kokkos-build
     DEEPMD_KOKKOS_ARGS="-DDEEPMD_LAMMPS_KOKKOS=ON -DKokkos_DIR=${KOKKOS_INSTALL_PREFIX}/lib/cmake/Kokkos"

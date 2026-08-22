@@ -24,7 +24,7 @@ source:
       - patches/0003-kokkos-build-cuda-fatbins.patch
 
 build:
-  number: 3
+  number: 4
   # Kokkos calls the CUDA driver API directly. The real libcuda is supplied by
   # the host NVIDIA driver rather than by a conda runtime package.
   missing_dso_whitelist:
@@ -67,20 +67,20 @@ requirements:
     - pytorch * {{ proc_type }}*
     - setuptools_scm
     - {{ mpi }}
-    - cuda-cudart-dev  # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-cudart-dev  # [cuda_compiler_version != "None"]
     # Kokkos' exported CMake package resolves the CUDA driver target while
     # compiling the GPU-resident LAMMPS plugin.
-    - cuda-driver-dev  # [(cuda_compiler_version or "").startswith("12")]
-    - cuda-version {{ cuda_compiler_version }}  # [(cuda_compiler_version or "").startswith("12")]
+    - cuda-driver-dev  # [cuda_compiler_version != "None"]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     # require by pytorch
-    - libcublas-dev    # [(cuda_compiler_version or "").startswith("12")]
-    - libcurand-dev  # [(cuda_compiler_version or "").startswith("12")]
-    - libcufft-dev     # [(cuda_compiler_version or "").startswith("12")]
-    - cuda-nvrtc-dev   # [(cuda_compiler_version or "").startswith("12")]
-    - cuda-nvtx-dev    # [(cuda_compiler_version or "").startswith("12")]
-    - libcusparse-dev  # [(cuda_compiler_version or "").startswith("12")]
-    - libcusolver-dev  # [(cuda_compiler_version or "").startswith("12")]
-    - libcudss-dev     # [(cuda_compiler_version or "").startswith("12")]
+    - libcublas-dev    # [cuda_compiler_version != "None"]
+    - libcurand-dev  # [cuda_compiler_version != "None"]
+    - libcufft-dev     # [cuda_compiler_version != "None"]
+    - cuda-nvrtc-dev   # [cuda_compiler_version != "None"]
+    - cuda-nvtx-dev    # [cuda_compiler_version != "None"]
+    - libcusparse-dev  # [cuda_compiler_version != "None"]
+    - libcusolver-dev  # [cuda_compiler_version != "None"]
+    - libcudss-dev     # [cuda_compiler_version != "None"]
     - dependency-groups
     - libabseil
     - tomli
