@@ -40,7 +40,7 @@ diff --git a/lib/kokkos/bin/nvcc_wrapper b/lib/kokkos/bin/nvcc_wrapper
 diff --git a/lib/kokkos/cmake/kokkos_arch.cmake b/lib/kokkos/cmake/kokkos_arch.cmake
 --- a/lib/kokkos/cmake/kokkos_arch.cmake
 +++ b/lib/kokkos/cmake/kokkos_arch.cmake
-@@ -813,10 +813,33 @@ function(CHECK_CUDA_ARCH ARCH FLAG)
+@@ -813,10 +813,36 @@ function(CHECK_CUDA_ARCH ARCH FLAG)
        if(KOKKOS_ENABLE_COMPILE_AS_CMAKE_LANGUAGE)
          set(CMAKE_CUDA_ARCHITECTURES ${KOKKOS_CUDA_ARCHITECTURES} PARENT_SCOPE)
        else()
@@ -49,16 +49,19 @@ diff --git a/lib/kokkos/cmake/kokkos_arch.cmake b/lib/kokkos/cmake/kokkos_arch.c
 -          global_append(KOKKOS_LINK_OPTIONS "${CUDA_ARCH_FLAG}=${FLAG}")
 -        endif()
 +        if(Kokkos_CUDA_FATBIN_ARCHITECTURES)
-+          # Keep one Kokkos logical architecture while emitting native cubins
-+          # for every requested CUDA target. Only the newest virtual
-+          # architecture is retained as PTX for forward compatibility.
-+          list(GET Kokkos_CUDA_FATBIN_ARCHITECTURES -1 KOKKOS_CUDA_PTX_ARCH)
-+          foreach(KOKKOS_CUDA_FATBIN_ARCH IN LISTS Kokkos_CUDA_FATBIN_ARCHITECTURES)
-+            if(KOKKOS_CUDA_FATBIN_ARCH STREQUAL KOKKOS_CUDA_PTX_ARCH)
-+              set(KOKKOS_CUDA_FATBIN_CODE
-+                  "[sm_${KOKKOS_CUDA_FATBIN_ARCH},compute_${KOKKOS_CUDA_FATBIN_ARCH}]")
-+            else()
++          # Keep one Kokkos logical architecture while emitting the exact
++          # real and virtual targets supplied by the nvcc activation script.
++          # CUDA 13 family-specific suffixes such as 100f are preserved.
++          foreach(KOKKOS_CUDA_FATBIN_TARGET IN LISTS Kokkos_CUDA_FATBIN_ARCHITECTURES)
++            if(KOKKOS_CUDA_FATBIN_TARGET MATCHES "^(.+)-real$")
++              set(KOKKOS_CUDA_FATBIN_ARCH "${CMAKE_MATCH_1}")
 +              set(KOKKOS_CUDA_FATBIN_CODE "sm_${KOKKOS_CUDA_FATBIN_ARCH}")
++            elseif(KOKKOS_CUDA_FATBIN_TARGET MATCHES "^(.+)-virtual$")
++              set(KOKKOS_CUDA_FATBIN_ARCH "${CMAKE_MATCH_1}")
++              set(KOKKOS_CUDA_FATBIN_CODE "compute_${KOKKOS_CUDA_FATBIN_ARCH}")
++            else()
++              message(FATAL_ERROR
++                      "Invalid CUDA fatbin target: ${KOKKOS_CUDA_FATBIN_TARGET}")
 +            endif()
 +            set(KOKKOS_CUDA_FATBIN_FLAG
 +                "-gencode=arch=compute_${KOKKOS_CUDA_FATBIN_ARCH},code=${KOKKOS_CUDA_FATBIN_CODE}")
