@@ -15,6 +15,8 @@ source:
     patches:
       - patches/0001-find-external-protobuf-for-tensorflow-2.21.patch
       - patches/0002-support-lammps-2025-kokkos-api.patch
+      - patches/0004-register-lammps-kokkos-plugin-styles.patch
+      - patches/0005-share-lammps-kokkos-runtime.patch
   - url: https://github.com/lammps/lammps/archive/{{ lammps_version }}.tar.gz
     sha256: 9d1eb62c47b8bb1c2003dfe5b5e82b3ebef4223b51593f9aec2410c5ec983977
     folder: lammps
@@ -144,10 +146,15 @@ test:
     # Preloading the stub satisfies libcuda.so.1 on driverless CI runners. A
     # real NVIDIA driver supplies the same SONAME in normal GPU environments.
     - export LD_PRELOAD="$PREFIX/lib/stubs/libcuda.so"  # [linux and cuda_compiler_version != "None"]
-    # Registration can be tested without a GPU; actual deepmd/kk execution
-    # additionally requires a supported edge/graph-input .pt2 model.
-    - lmp_mpi -h | grep -q "deepmd/kk"  # [cuda_compiler_version != "None"]
-    - lmp_mpi -h | grep -q "dpa4spin/kk"  # [cuda_compiler_version != "None"]
+    # Query LAMMPS' runtime plugin and style registries. The static `-h`
+    # listing only contains styles compiled into LAMMPS itself.
+    - printf 'plugin list\ninfo styles pair\n' | lmp_mpi -log none -echo none -in /dev/stdin > lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "deepmd/kk" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "dpa4spin/kk" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin deepmd/kk/device" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin deepmd/kk/host" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin dpa4spin/kk/device" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
+    - grep -q "pair style plugin dpa4spin/kk/host" lammps-pair-styles.txt  # [cuda_compiler_version != "None"]
     - mpiexec -n 1 lmp_mpi -in in.lammps  # [not aarch64]
 
 about:
