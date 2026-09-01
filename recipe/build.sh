@@ -1,7 +1,7 @@
 set -evx
 
-# PyTorch extensions use toolkit-specific architecture spellings. CUDA 13
-# dropped pre-Turing targets, so its list must not inherit CUDA 12 entries.
+# PyTorch extensions use toolkit-specific architecture spellings.  Kokkos is
+# configured separately below because it uses its own architecture names.
 if [[ ${cuda_compiler_version} == 11.2 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6+PTX"
     DEEPMD_KOKKOS_ARCH=MAXWELL50
@@ -12,6 +12,7 @@ elif [[ ${cuda_compiler_version} == 12.* ]]; then
     export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0;10.0;12.0+PTX"
     DEEPMD_KOKKOS_ARCH=MAXWELL50
 elif [[ ${cuda_compiler_version} == 13.* ]]; then
+    # CUDA 13 dropped pre-Turing targets and renamed sm_101 to sm_110.
     export TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0;10.0;11.0;12.0+PTX"
     DEEPMD_KOKKOS_ARCH=TURING75
 elif [[ ${cuda_compiler_version} != "None" ]]; then
@@ -23,14 +24,9 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     DEEPMD_USE_CUDA_TOOLKIT=TRUE
     DP_VARIANT=cuda
 
-    # deepmd/kk passes Kokkos device views owned by LAMMPS across the plugin
-    # boundary. Build against LAMMPS' vendored Kokkos release and the same
-    # logical architecture setting as lammps-feedstock to keep that ABI
-    # compatible. Native cubins avoid plugin-side driver JIT on known GPUs.
-    # The nvcc activation script supplies the exact real and virtual targets
-    # supported by each toolkit, including CUDA 13 suffixes such as 100f.
-    # Pass that list through unchanged instead of deriving it from PyTorch's
-    # less expressive architecture syntax.
+    # Build Kokkos from the LAMMPS source tree so the plugin and LAMMPS share
+    # one Kokkos ABI.  The nvcc activation script supplies the exact real and
+    # virtual targets, including CUDA 13 suffixes such as 100f.
     if [[ -z ${CUDAARCHS:-} ]]; then
         echo "CUDAARCHS was not set by the CUDA compiler activation script."
         exit 1
@@ -63,9 +59,8 @@ else
     DEEPMD_KOKKOS_ARGS="-DDEEPMD_LAMMPS_KOKKOS=OFF"
 fi
 # TensorFlow 2.21 no longer exports TF_Version from the framework library used
-# by Python extensions. The conda variant is authoritative and also works when
-# cross-compiling, where the target Python cannot be executed. DeepMD's version
-# parser requires a patch component before defining TF_*_VERSION for C++ code.
+# by Python extensions.  The conda variant is authoritative, including during
+# cross compilation, and DeepMD's parser expects a patch component.
 export CMAKE_ARGS="${CMAKE_ARGS} -D TENSORFLOW_VERSION=${tensorflow}.0"
 if [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_OSX_ARCHITECTURES="arm64"
@@ -87,26 +82,35 @@ DP_VARIANT=${DP_VARIANT} \
     DP_ENABLE_PYTORCH=1 \
 	SETUPTOOLS_SCM_PRETEND_VERSION=$PKG_VERSION python -m pip install . -vv
 
+# The standalone libtorch CMake config expects its Protobuf imported target to
+# exist already.  TensorFlow can find the headers without creating that target,
+# so initialize Protobuf explicitly before Torch is discovered.
+perl -0pi -e 's/  find_package\(Torch REQUIRED\)/  find_package(Protobuf REQUIRED)\n  find_package(Torch REQUIRED)/' \
+    $SRC_DIR/source/CMakeLists.txt
 
 mkdir $SRC_DIR/source/build
 cd $SRC_DIR/source/build
 
+# libtensorflow_cc keeps its vendored Eigen and XLA trees below
+# tensorflow/third_party rather than at the roots expected by public headers.
+export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include/tensorflow/third_party -I${PREFIX}/include/tensorflow/third_party/xla"
 
-cmake -D USE_TF_PYTHON_LIBS=TRUE \
+cmake ${CMAKE_ARGS} \
+      -D USE_TF_PYTHON_LIBS=FALSE \
+      -D USE_PT_PYTHON_LIBS=FALSE \
       -D ENABLE_TENSORFLOW=TRUE \
       -D ENABLE_PYTORCH=TRUE \
 	  -D CMAKE_INSTALL_PREFIX=${PREFIX} \
       -D USE_CUDA_TOOLKIT=${DEEPMD_USE_CUDA_TOOLKIT} \
-      -D CMAKE_PREFIX_PATH=${SP_DIR}/torch/ \
-	  ${CMAKE_ARGS} \
+	  -D LAMMPS_SOURCE_ROOT=$SRC_DIR/lammps \
+	  -D TENSORFLOW_ROOT=${PREFIX} \
+	  -D CMAKE_PREFIX_PATH=${PREFIX} \
 	  $SRC_DIR/source
 make -j${CPU_COUNT} VERBOSE=1
 make install
 
-# Configure the plugin separately against the installed C API. A CUDA-enabled
-# Kokkos package installs a global nvcc compiler launcher; isolating it here
-# prevents the TensorFlow and PyTorch interface libraries above from being
-# unnecessarily rebuilt by nvcc.
+# Configure the plugin separately against the installed C API.  Kokkos' CUDA
+# compiler launcher must not leak into the TensorFlow/PyTorch build above.
 mkdir $SRC_DIR/source/plugin-build
 cd $SRC_DIR/source/plugin-build
 cmake -D BUILD_CPP_IF=TRUE \
@@ -122,16 +126,12 @@ cmake -D BUILD_CPP_IF=TRUE \
 	  ${CMAKE_ARGS} \
 	  $SRC_DIR/source
 make -j${CPU_COUNT} VERBOSE=1
-# This imported-C-API configuration also generates CMake package files for the
-# already-installed DeePMD libraries. Stage its installation and copy only the
-# LAMMPS module so the primary build's development exports remain intact.
+# Stage the plugin installation and copy only its module.  This preserves the
+# primary build's CMake exports while honoring the plugin's generated files.
 PLUGIN_INSTALL_STAGE=${SRC_DIR}/plugin-install
 DESTDIR="${PLUGIN_INSTALL_STAGE}" make install
 cp -a "${PLUGIN_INSTALL_STAGE}${PREFIX}/lib"/libdeepmd_lmp.* "${PREFIX}/lib/"
 mkdir -p "${PREFIX}/lib/deepmd_lmp"
-# DeepMD's install(CODE) writes this plugin symlink directly to the real
-# prefix instead of honoring DESTDIR. Recreate it explicitly after copying the
-# staged module so plugin discovery does not depend on that CMake behavior.
 ln -sfn ../libdeepmd_lmp.so "${PREFIX}/lib/deepmd_lmp/dpplugin.so"
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.

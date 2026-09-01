@@ -51,6 +51,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-deepmd--kit-green.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/deepmd-kit.svg)](https://anaconda.org/conda-forge/deepmd-kit) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libdeepmd-green.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libdeepmd.svg)](https://anaconda.org/conda-forge/libdeepmd) |
 
 Installing deepmd-kit
 =====================
@@ -69,7 +70,7 @@ How to use
 <summary>With conda</summary>
 
 ```
-conda install deepmd-kit
+conda install deepmd-kit libdeepmd
 ```
 
 </details>
@@ -78,7 +79,7 @@ conda install deepmd-kit
 <summary>With mamba</summary>
 
 ```
-mamba install deepmd-kit
+mamba install deepmd-kit libdeepmd
 ```
 
 </details>
@@ -88,9 +89,9 @@ mamba install deepmd-kit
 
 ```
 # for adding to your local project
-pixi add deepmd-kit
+pixi add deepmd-kit libdeepmd
 # for installing globally
-pixi global install deepmd-kit
+pixi global install deepmd-kit libdeepmd
 ```
 
 </details>
