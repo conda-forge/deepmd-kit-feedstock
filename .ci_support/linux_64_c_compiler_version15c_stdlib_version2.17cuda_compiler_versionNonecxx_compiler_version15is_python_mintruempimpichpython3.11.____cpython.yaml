@@ -29,9 +29,9 @@ libabseil:
 libtensorflow_cc:
 - '2.21'
 libtorch:
-- '2.12'
+- '2.14'
 mpi:
-- openmpi
+- mpich
 mpich:
 - '5'
 openmpi:
@@ -44,11 +44,11 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.11.* *_cpython
 python_min:
-- '3.10'
+- '3.11'
 pytorch:
-- '2.12'
+- '2.14'
 target_platform:
 - linux-64
 tensorflow:

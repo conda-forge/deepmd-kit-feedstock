@@ -32,7 +32,7 @@ source:
       - patches/0003-kokkos-build-cuda-fatbins.patch
 
 build:
-  number: 6
+  number: 7
   # Kokkos calls the CUDA driver API directly.  The real libcuda is supplied
   # by the host NVIDIA driver rather than by a conda runtime package.
   missing_dso_whitelist:
